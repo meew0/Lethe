@@ -27,12 +27,15 @@ client.on('message', m => {
   if (!botMention) return;
 
   if (m.content.startsWith(`${botMention} i`)) { // init
+    var channelToJoin = getArgument(m.content);
     for (var channel of m.channel.server.channels) {
       if (channel instanceof Discord.VoiceChannel) {
-        boundChannel = m.channel;
-        client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${channel.name}** \`(${channel.id})\``);
-        client.joinVoiceChannel(channel).catch(error);
-        break;
+        if (!channelToJoin || channel.name === channelToJoin) {
+          boundChannel = m.channel;
+          client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${channel.name}** \`(${channel.id})\``);
+          client.joinVoiceChannel(channel).catch(error);
+          break;
+        }
       }
     }
   }
