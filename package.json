@@ -1,0 +1,22 @@
+{
+  "name": "Lethe",
+  "description": "YouTube playback bot for Discord",
+  "main": "./lethe.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meew0/Lethe.git"
+  },
+  "keywords": ["youtube", "discord", "playback", "video", "song"],
+  "author": "meew0",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meew0/Lethe/issues"
+  },
+  "homepage": "https://github.com/meew0/Lethe#readme",
+  "dependencies": {
+    "youtube-audio-stream": "^0.0.13",
+    "ytdl-core": "^0.7.6",
+    "discord.js": "hydrabolt/discord.js#rewrite"
+  },
+  "version": "1.0.0"
+}
