@@ -23,6 +23,6 @@ Where "Bot" is your bot's username.
 
 The following commands will only work inside the text channel Lethe was bound to.
 
-`yt [id]`: Queues a video from YouTube to be played. If this is the only song in the queue, start playback. `queue [id]` does the same thing.
-`list`: Lists the videos on the queue.
+`yt [id]`: Queues a video from YouTube to be played. If this is the only song in the queue, start playback. `queue [id]` does the same thing.  
+`list`: Lists the videos on the queue.  
 `next`: Stops the current playback and skips to the next video in the queue.
