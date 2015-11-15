@@ -108,6 +108,12 @@ client.on('message', m => {
       else saveVideo(info, splitArgs[1], m);
     });
   }
+
+  if (m.content.startsWith(`${botMention} t`)) { // time
+    var streamTime = client.internal.voiceConnection.streamTime; // in ms
+    var videoTime = currentVideo.length_seconds;
+    client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)}`);
+  }
 });
 
 function spliceArguments(message, after) {
