@@ -88,11 +88,7 @@ client.on('message', m => {
     var requestUrl = 'http://www.youtube.com/watch?v=' + splitArgs[0];
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
-      else {
-        Saved.saved.videos[splitArgs[1]] = splitArgs[0];
-        client.reply(m, `Saved video ${VideoFormat.prettyPrint(info)} as **${splitArgs[1]}**`);
-        Saved.write();
-      }
+      else saveVideo(info, splitArgs[1], m);
     });
   }
 });
@@ -102,6 +98,15 @@ function spliceArguments(message, after) {
   var rest = message.split(' ');
   var removed = rest.splice(0, after);
   return [removed.join(' '), rest.join(' ')];
+}
+
+
+
+function saveVideo(video, keywords, m) {
+  simplified = VideoFormat.simplify(video);
+  Saved.saved.videos[keywords] = simplified;
+  client.reply(m, `Saved video ${VideoFormat.prettyPrint(video)} as **${splitArgs[1]}**`);
+  Saved.write();
 }
 
 function possiblyQueue(video, userId, m) {
