@@ -73,6 +73,17 @@ client.on('message', m => {
     });
   }
 
+  if (m.content.startsWith(`${botMention} list s`)) { // list saved
+    var formattedList = 'Here are the videos currently saved: \n';
+    for(var key in Saved.saved.videos) {
+      if(Saved.saved.videos.hasOwnProperty(key)) {
+        formattedList += `**${key}**: ${VideoFormat.prettyPrint(Saved.saved.videos[key])}\n`;
+      }
+    }
+    client.reply(m, formattedList);
+    return; // so list doesn't get triggered
+  }
+
   if (m.content.startsWith(`${botMention} l`)) { // list
     var formattedList = 'Here are the videos currently in the play queue, from first added to last added: \n';
     formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
