@@ -6,6 +6,9 @@ var ytdl = require('ytdl-core');
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
 
+var Saved = require('./lib/saved.js');
+Saved.read();
+
 var client = new Discord.Client();
 
 // Handle discord.js warnings
@@ -27,7 +30,7 @@ client.on('message', m => {
   if (!botMention) return;
 
   if (m.content.startsWith(`${botMention} i`)) { // init
-    var channelToJoin = getArgument(m.content);
+    var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
       if (channel instanceof Discord.VoiceChannel) {
         if (!channelToJoin || channel.name === channelToJoin) {
@@ -61,7 +64,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} y`) // youtube
     || m.content.startsWith(`${botMention} q`)) { // queue
 
-    var requestUrl = 'http://www.youtube.com/watch?v=' + getArgument(m.content);
+    var requestUrl = 'http://www.youtube.com/watch?v=' + spliceArguments(m.content)[2];
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
       else possiblyQueue(info, m.author.id, m);
@@ -76,13 +79,19 @@ client.on('message', m => {
     });
     client.reply(m, formattedList);
   }
+
+  if (m.content.startsWith(`${botMention} s`)) { // save
+    var argument = spliceArguments(m.content)[2];
+    var splitArgs = spliceArguments(argument, 1);
+    Saved.saved.videos[splitArgs[0]] = splitArgs[1];
+    Saved.write();
+  }
 });
 
-function getArgument(message) {
+function spliceArguments(message, after = 2) {
   var rest = message.split(' ');
-  rest.splice(0, 2);
-  rest = rest.join(' ');
-  return rest;
+  var removed = rest.splice(0, after);
+  return [removed.join(' '), rest.join(' ')];
 }
 
 function possiblyQueue(video, userId, m) {
