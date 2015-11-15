@@ -1,6 +1,10 @@
 # Lethe
 Simple YouTube playback bot for Discord
 
+## Dependencies
+* The ones in package.json
+* ffmpeg, it needs to be installed and in your path
+
 ## Usage
 Run Lethe using the email and password as command line arguments:
 
