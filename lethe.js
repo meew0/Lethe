@@ -69,6 +69,7 @@ client.on('message', m => {
     var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[1]);
     if (!vid) {
       client.reply(m, 'You need to specify a video!');
+      return;
     }
 
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
@@ -101,6 +102,11 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} s`)) { // save
     var argument = spliceArguments(m.content)[1];
+    if (!argument) {
+      client.reply(m, 'You need to specify a video and a keyword!');
+      return;
+    }
+
     var splitArgs = spliceArguments(argument, 1);
     var requestUrl = 'http://www.youtube.com/watch?v=' + splitArgs[0];
     ytdl.getInfo(requestUrl, (err, info) => {
