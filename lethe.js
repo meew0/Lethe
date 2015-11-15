@@ -89,7 +89,7 @@ client.on('message', m => {
       if (err) handleYTError(err);
       else {
         Saved.saved.videos[splitArgs[1]] = splitArgs[0];
-        client.reply(m, `Saved video ${VideoFormat.prettyPrint(info)} as ${splitArgs[1]}`);
+        client.reply(m, `Saved video ${VideoFormat.prettyPrint(info)} as **${splitArgs[1]}**`);
         Saved.write();
       }
     });
