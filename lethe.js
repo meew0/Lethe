@@ -83,8 +83,15 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} s`)) { // save
     var argument = spliceArguments(m.content)[2];
     var splitArgs = spliceArguments(argument, 1);
-    Saved.saved.videos[splitArgs[0]] = splitArgs[1];
-    Saved.write();
+    var requestUrl = 'http://www.youtube.com/watch?v=' + splitArgs[0];
+    ytdl.getInfo(requestUrl, (err, info) => {
+      if (err) handleYTError(err);
+      else {
+        Saved.saved.videos[splitArgs[1]] = splitArgs[0];
+        client.reply(m, `Saved video ${VideoFormat.prettyPrint(info)} as ${splitArgs[1]}`);
+        Saved.write();
+      }
+    });
   }
 });
 
