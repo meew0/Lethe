@@ -62,7 +62,7 @@ client.on('message', m => {
       currentStream.destroy();
       playStopped();
     } else {
-      client.reply(m, 'Cannot skip to the next video as the queue is empty!')
+      client.reply(m, 'Cannot skip to the next video as the queue is empty!');
     }
   }
 
