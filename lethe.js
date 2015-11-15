@@ -58,8 +58,12 @@ client.on('message', m => {
   if (!m.channel.equals(boundChannel)) return;
 
   if (m.content.startsWith(`${botMention} n`)) { // next
-    currentStream.destroy();
-    playStopped();
+    if (playQueue.length > 0) {
+      currentStream.destroy();
+      playStopped();
+    } else {
+      client.reply(m, 'Cannot skip to the next video as the queue is empty!')
+    }
   }
 
   if (m.content.startsWith(`${botMention} y`) // youtube
