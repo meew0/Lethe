@@ -1,5 +1,5 @@
 # Lethe
-Simple YouTube playback bot for Discord
+Simple YouTube playback bot for Discord. Warning: Lethe is absolutely not stable at all! It is likely to either not run at all or crash soon after running. If you experience anything like that, please report an [issue](https://github.com/meew0/Lethe/issues)!
 
 ## Dependencies
 * The ones in package.json
