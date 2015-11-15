@@ -113,7 +113,7 @@ client.on('message', m => {
     var requestUrl = 'http://www.youtube.com/watch?v=' + splitArgs[0];
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
-      else saveVideo(info, splitArgs[1], m);
+      else saveVideo(info, splitArgs[0], splitArgs[1], m);
     });
   }
 
@@ -131,8 +131,8 @@ function spliceArguments(message, after) {
   return [removed.join(' '), rest.join(' ')];
 }
 
-function saveVideo(video, keywords, m) {
-  simplified = VideoFormat.simplify(video);
+function saveVideo(video, vid, keywords, m) {
+  simplified = VideoFormat.simplify(video, vid);
   if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${simplePrint(Saved.saved.videos[keywords])} is already saved as *${keywords}*! Overwriting.`);
   Saved.saved.videos[keywords] = simplified;
   client.reply(m, `Saved video ${VideoFormat.prettyPrint(video)} as *${keywords}*`);
