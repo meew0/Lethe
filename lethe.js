@@ -64,7 +64,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} y`) // youtube
     || m.content.startsWith(`${botMention} q`)) { // queue
 
-    var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[2]);
+    var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[1]);
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
@@ -82,7 +82,7 @@ client.on('message', m => {
   }
 
   if (m.content.startsWith(`${botMention} s`)) { // save
-    var argument = spliceArguments(m.content)[2];
+    var argument = spliceArguments(m.content)[1];
     var splitArgs = spliceArguments(argument, 1);
     var requestUrl = 'http://www.youtube.com/watch?v=' + splitArgs[0];
     ytdl.getInfo(requestUrl, (err, info) => {
