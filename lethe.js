@@ -64,7 +64,8 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} y`) // youtube
     || m.content.startsWith(`${botMention} q`)) { // queue
 
-    var requestUrl = 'http://www.youtube.com/watch?v=' + spliceArguments(m.content)[2];
+    var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[2]);
+    var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
       else possiblyQueue(info, m.author.id, m);
