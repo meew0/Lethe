@@ -30,6 +30,7 @@ client.on('message', m => {
   if (!botMention) return;
 
   if (m.content.startsWith(`${botMention} i`)) { // init
+    if (boundChannel) return;
     var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
       if (channel instanceof Discord.VoiceChannel) {
@@ -66,6 +67,10 @@ client.on('message', m => {
     || m.content.startsWith(`${botMention} p`)) { // play
 
     var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[1]);
+    if (!vid) {
+      client.reply(m, 'You need to specify a video!');
+    }
+
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
