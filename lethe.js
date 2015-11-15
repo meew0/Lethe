@@ -63,6 +63,7 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} y`) // youtube
     || m.content.startsWith(`${botMention} q`)) { // queue
+    || m.content.startsWith(`${botMention} p`)) { // play
 
     var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[1]);
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
