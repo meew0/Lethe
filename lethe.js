@@ -113,9 +113,9 @@ function spliceArguments(message, after) {
 
 function saveVideo(video, keywords, m) {
   simplified = VideoFormat.simplify(video);
-  if(Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${simplePrint(Saved.saved.videos[keywords])} is already saved as *${keywords}*! Overwriting.`)
+  if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${simplePrint(Saved.saved.videos[keywords])} is already saved as *${keywords}*! Overwriting.`);
   Saved.saved.videos[keywords] = simplified;
-  client.reply(m, `Saved video ${VideoFormat.prettyPrint(video)} as **${splitArgs[1]}**`);
+  client.reply(m, `Saved video ${VideoFormat.prettyPrint(video)} as *${keywords}*`);
   Saved.write();
 }
 
