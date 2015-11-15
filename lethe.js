@@ -75,11 +75,12 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} list s`)) { // list saved
     var formattedList = 'Here are the videos currently saved: \n';
-    for(var key in Saved.saved.videos) {
-      if(Saved.saved.videos.hasOwnProperty(key)) {
-        formattedList += `**${key}**: ${VideoFormat.prettyPrint(Saved.saved.videos[key])}\n`;
+    for (var key in Saved.saved.videos) {
+      if (Saved.saved.videos.hasOwnProperty(key)) {
+        formattedList += `*${key}*: ${VideoFormat.prettyPrint(Saved.saved.videos[key])}\n`;
       }
     }
+
     client.reply(m, formattedList);
     return; // so list doesn't get triggered
   }
