@@ -48,9 +48,11 @@ client.on('message', m => {
     if (!boundChannel) return;
     client.reply(m, `Unbinding from <#${boundChannel.id}> and destroying voice connection`);
     playQueue = [];
-    currentStream.destroy();
+    if (currentStream) currentStream.destroy();
     client.internal.leaveVoiceChannel();
     boundChannel = false;
+    currentStream = false;
+    currentVideo = false;
     return;
   }
 
@@ -122,7 +124,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} t`)) { // time
     var streamTime = client.internal.voiceConnection.streamTime; // in ms
     var videoTime = currentVideo.length_seconds;
-    client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)}`);
+    client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${streamTime / (videoTime * 1000)} %)`);
   }
 });
 
