@@ -5,6 +5,8 @@ Simple YouTube playback bot for Discord. Warning: Lethe is absolutely not stable
 * The ones in package.json
 * ffmpeg, it needs to be installed and in your path
 
+Also, you will get crashes when doing certain things unless you comment out line 476 of `processor.js` in `node_modules/fluent-ffmpeg/lib` (should look like `emitEnd(new Error('Output stream closed'));`). There is a way around this but I haven't found it yet.
+
 ## Usage
 Run Lethe using the email and password as command line arguments:
 
