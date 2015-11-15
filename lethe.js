@@ -156,9 +156,9 @@ function possiblyQueue(video, userId, m) {
 function handleYTError(err) {
   if (err.toString().indexOf('Code 150') > -1) {
     // Video unavailable in country
-    client.sendMessage(boundChannel, 'This video is unavailable in the country the bot is running in! Please try a different video.');
+    boundChannel.sendMessage('This video is unavailable in the country the bot is running in! Please try a different video.');
   } else {
-    client.sendMessage(boundChannel, 'An error occurred while getting video information! Please try a different video.');
+    boundChannel.sendMessage('An error occurred while getting video information! Please try a different video.');
   }
 
   console.log(err.toString());
@@ -167,7 +167,7 @@ function handleYTError(err) {
 function playStopped() {
   if (client.internal.voiceConnection) client.internal.voiceConnection.stopPlaying();
 
-  client.sendMessage(boundChannel, `Finished playing ${VideoFormat.simplePrint(currentVideo)}`);
+  boundChannel.sendMessage(`Finished playing ${VideoFormat.simplePrint(currentVideo)}`);
   currentVideo = false;
   nextInQueue();
 }
@@ -179,7 +179,7 @@ function play(video) {
     currentStream = youtubeStream(video.loaderUrl);
     currentStream.on('end', () => setTimeout(playStopped, 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
-      client.sendMessage(boundChannel, `Playing ${VideoFormat.prettyPrint(video)}`);
+      boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
     });
   }
 }
