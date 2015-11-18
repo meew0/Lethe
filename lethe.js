@@ -9,6 +9,8 @@ var VideoFormat = require('./lib/video-format.js');
 var Saved = require('./lib/saved.js');
 Saved.read();
 
+var url = require('url');
+
 var client = new Discord.Client();
 
 // Handle discord.js warnings
@@ -68,7 +70,13 @@ client.on('message', m => {
     || m.content.startsWith(`${botMention} q`) // queue
     || m.content.startsWith(`${botMention} p`)) { // play
 
-    var vid = Saved.possiblyRetrieveVideo(spliceArguments(m.content)[1]);
+    var vid = spliceArguments(m.content)[1];
+    if (/^http/.test(vid)){
+      if (url.parse(vid,true).query.v){
+        vid = url.parse(vid,true).query.v;
+      }
+    }
+    vid = Saved.possiblyRetrieveVideo(vid);
     if (!vid) {
       client.reply(m, 'You need to specify a video!');
       return;
