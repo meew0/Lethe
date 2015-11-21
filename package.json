@@ -16,7 +16,7 @@
   "dependencies": {
     "youtube-audio-stream": "^0.0.13",
     "ytdl-core": "^0.7.6",
-    "discord.js": "hydrabolt/discord.js#rewrite"
+    "discord.js": "hydrabolt/discord.js#master"
   },
   "version": "1.0.0"
 }
