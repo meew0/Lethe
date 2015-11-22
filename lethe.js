@@ -71,23 +71,14 @@ client.on('message', m => {
     || m.content.startsWith(`${botMention} q`) // queue
     || m.content.startsWith(`${botMention} p`)) { // play
 
-    var vid = spliceArguments(m.content)[1];
-    if (/^http/.test(vid)) {
-      if (url.parse(vid, true).query.v) {
-        vid = url.parse(vid, true).query.v;
-      }
-    }
+    var vidList = spliceArguments(m.content)[1];
 
-    vid = Saved.possiblyRetrieveVideo(vid);
-    if (!vid) {
-      client.reply(m, 'You need to specify a video!');
-      return;
-    }
-
-    var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
-    ytdl.getInfo(requestUrl, (err, info) => {
-      if (err) handleYTError(err);
-      else possiblyQueue(info, m.author.id, m);
+    var vids = vidList.split(',');
+    var suppress = 0;
+    vids.forEach((vid, idx) => {
+      if (idx == 1) suppress = vids.length - 2;
+      if (idx == 2) suppress = -1;
+      parseVidAndQueue(vid, m, suppress);
     });
   }
 
@@ -134,6 +125,26 @@ client.on('message', m => {
   }
 });
 
+function parseVidAndQueue(vid, m, suppress) {
+  if (/^http/.test(vid)) {
+    if (url.parse(vid, true).query.v) {
+      vid = url.parse(vid, true).query.v;
+    }
+  }
+
+  vid = Saved.possiblyRetrieveVideo(vid);
+  if (!vid) {
+    client.reply(m, 'You need to specify a video!');
+    return;
+  }
+
+  var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
+  ytdl.getInfo(requestUrl, (err, info) => {
+    if (err) handleYTError(err);
+    else possiblyQueue(info, m.author.id, m, suppress);
+  });
+}
+
 function spliceArguments(message, after) {
   after = after || 2;
   var rest = message.split(' ');
@@ -149,14 +160,15 @@ function saveVideo(video, vid, keywords, m) {
   Saved.write();
 }
 
-function possiblyQueue(video, userId, m) {
+function possiblyQueue(video, userId, m, suppress) {
   video.userId = userId;
   reason = shouldDisallowQueue(playQueue, video);
   if (reason) {
     client.reply(m, `You can't queue this video right now! Reason: ${reason}`);
   } else {
     playQueue.push(video);
-    client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
+    if (suppress == 0) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
+    else if (suppress > -1) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)} and ${suppress} other videos`);
 
     // Start playing if not playing yet
     if (!currentVideo) nextInQueue();
