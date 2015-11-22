@@ -15,6 +15,7 @@ var client = new Discord.Client();
 
 // Handle discord.js warnings
 client.on('warn', (m) => console.log('[warn]', m));
+client.on('debug', (m) => console.log('[debug]', m));
 
 var playQueue = [];
 var boundChannel = false;
@@ -71,11 +72,12 @@ client.on('message', m => {
     || m.content.startsWith(`${botMention} p`)) { // play
 
     var vid = spliceArguments(m.content)[1];
-    if (/^http/.test(vid)){
-      if (url.parse(vid,true).query.v){
-        vid = url.parse(vid,true).query.v;
+    if (/^http/.test(vid)) {
+      if (url.parse(vid, true).query.v) {
+        vid = url.parse(vid, true).query.v;
       }
     }
+
     vid = Saved.possiblyRetrieveVideo(vid);
     if (!vid) {
       client.reply(m, 'You need to specify a video!');
