@@ -6,6 +6,8 @@ var ytdl = require('ytdl-core');
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
 
+var request = require('request');
+
 var Saved = require('./lib/saved.js');
 Saved.read();
 
@@ -20,6 +22,8 @@ var currentStream = false;
 var currentVideo = false;
 
 var botMention = false;
+
+var apiKey = "AIzaSyD_I_2Kgy4fkNoOnUcJ0PSN3jYVtmLmbyI";
 
 client.on('ready', () => {
   botMention = `<@${client.internal.user.id}>`;
@@ -62,6 +66,45 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} n`)) { // next
     currentStream.destroy();
     playStopped();
+  }
+
+  if (m.content.startsWith(`${botMention} yq`) // youtube
+    || m.content.startsWith(`${botMention} qq`) // queue
+    || m.content.startsWith(`${botMention} pq`)
+    || m.content.startsWith(`${botMention} ytq`)) { // play
+    var q = "";
+    var args = spliceArguments(m.content);
+
+    for(var i = 1; i < args.length; i++) {
+      q+=args[i];
+    }
+    
+    if(!q){
+      client.reply(m, 'You need to specify a search parameter.');
+      return;
+    }
+
+    var requestUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+escape(q) +"&key="+apiKey;
+
+    request(requestUrl, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        body = JSON.parse(body);
+        if(body.items.length==0){
+          client.reply(m, 'Your query gave 0 results.');
+          return;
+        }
+        requestUrl = 'http://www.youtube.com/watch?v=' + body.items[0].id.videoId;
+          ytdl.getInfo(requestUrl, (err, info) => {
+            if (err) handleYTError(err);
+            else possiblyQueue(info, m.author.id, m);
+          });
+      }
+      else {
+        client.reply(m,'There was an error searching.')
+        return;
+      }
+    })
+    return; // have to stop propagation
   }
 
   if (m.content.startsWith(`${botMention} y`) // youtube
