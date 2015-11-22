@@ -135,8 +135,6 @@ client.on('message', m => {
       shuffle(playQueue);
       client.reply(m, "Songs in the queue have been shuffled.");
     }
-
-    client.reply(m, formattedList);
     return;
   }
 
