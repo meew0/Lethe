@@ -128,12 +128,12 @@ client.on('message', m => {
       m.content.startsWith(`${botMention} shuffle`)) { // list saved
     
     if(playQueue.length<2) {
-      client.reply(m, "Not enough songs in the queue.")
+      client.reply(m, "Not enough songs in the queue.");
       return;
     }
     else {
       shuffle(playQueue);
-      client.reply(m, "Songs in the queue have been shuffled.")
+      client.reply(m, "Songs in the queue have been shuffled.");
     }
 
     client.reply(m, formattedList);
