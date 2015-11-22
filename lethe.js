@@ -124,6 +124,22 @@ client.on('message', m => {
     });
   }
 
+  if (m.content.startsWith(`${botMention} sh`) ||
+      m.content.startsWith(`${botMention} shuffle`)) { // list saved
+    
+    if(playQueue.length<2) {
+      client.reply(m, "Not enough songs in the queue.")
+      return;
+    }
+    else {
+      shuffle(playQueue);
+      client.reply(m, "Songs in the queue have been shuffled.")
+    }
+
+    client.reply(m, formattedList);
+    return;
+  }
+
   if (m.content.startsWith(`${botMention} list s`)) { // list saved
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
@@ -232,6 +248,23 @@ function nextInQueue() {
     next = playQueue.shift();
     play(next);
   }
+}
+
+function shuffle(array) {
+    var counter = array.length, temp, index;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        index = Math.floor(Math.random() * counter);
+
+        counter--;
+
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
 }
 
 function error(argument) {
