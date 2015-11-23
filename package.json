@@ -6,7 +6,13 @@
     "type": "git",
     "url": "git+https://github.com/meew0/Lethe.git"
   },
-  "keywords": ["youtube", "discord", "playback", "video", "song"],
+  "keywords": [
+    "youtube",
+    "discord",
+    "playback",
+    "video",
+    "song"
+  ],
   "author": "meew0",
   "license": "MIT",
   "bugs": {
@@ -14,9 +20,10 @@
   },
   "homepage": "https://github.com/meew0/Lethe#readme",
   "dependencies": {
+    "discord.js": "hydrabolt/discord.js#master",
+    "request": "^2.67.0",
     "youtube-audio-stream": "^0.0.13",
-    "ytdl-core": "^0.7.6",
-    "discord.js": "hydrabolt/discord.js#master"
+    "ytdl-core": "^0.7.6"
   },
   "version": "1.0.0"
 }
