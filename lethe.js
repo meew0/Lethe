@@ -148,13 +148,13 @@ client.on('message', m => {
         }
 
         client.reply(m, `Loading ${body.items.length} videos...`);
+        var suppress = 0;
         body.items.forEach((elem, idx) => {
           requestUrl = 'http://www.youtube.com/watch?v=' +
             elem.contentDetails.videoId;
           ytdl.getInfo(requestUrl, (err, info) => {
             if (err) handleYTError(err);
             else {
-              var suppress;
               if (idx == 1) suppress = body.items.length - 2;
               if (idx == 2) suppress = -1;
               possiblyQueue(info, m.author.id, m, suppress);
@@ -281,7 +281,7 @@ function saveVideo(video, vid, keywords, m) {
 
 function possiblyQueue(video, userId, m, suppress) {
   video.userId = userId;
-  supress = supress || false;
+  suppress = (suppress === undefined) ? false : suppress;
   reason = shouldDisallowQueue(playQueue, video);
   if (reason) {
     client.reply(m, `You can't queue this video right now! Reason: ${reason}`);
