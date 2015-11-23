@@ -1,17 +1,14 @@
 var Discord = require('discord.js');
 
-var youtubeStream = require('youtube-audio-stream');
 var ytdl = require('ytdl-core');
+var request = require('request');
+var url = require('url');
 
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
-
-var request = require('request');
-
+var YoutubeStream = require('./lib/youtube-stream.js');
 var Saved = require('./lib/saved.js');
 Saved.read();
-
-var url = require('url');
 
 var client = new Discord.Client();
 
@@ -316,7 +313,7 @@ function play(video) {
   currentVideo = video;
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
-    currentStream = youtubeStream(video.loaderUrl);
+    currentStream = YoutubeStream.getStream(video.loaderUrl);
     currentStream.on('end', () => setTimeout(playStopped, 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
