@@ -157,7 +157,7 @@ client.on('message', m => {
             var suppress;
             if (idx == 1) suppress = body.items.length - 2;
             if (idx == 2) suppress = -1;
-            else possiblyQueue(info, m.author.id, m, suppress);
+            possiblyQueue(info, m.author.id, m, suppress);
           });
         });
 
