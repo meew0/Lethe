@@ -148,14 +148,18 @@ client.on('message', m => {
         }
 
         client.reply(m, `Loading ${body.items.length} videos...`);
-        for (var i = 0; i < body.items.length; i++) {
+        body.items.forEach((elem, idx) => {
           requestUrl = 'http://www.youtube.com/watch?v=' +
-            body.items[i].contentDetails.videoId;
+            elem.contentDetails.videoId;
           ytdl.getInfo(requestUrl, (err, info) => {
             if (err) handleYTError(err);
-            else possiblyQueue(info, m.author.id, m, true);
+
+            var suppress;
+            if (idx == 1) suppress = body.items.length - 2;
+            if (idx == 2) suppress = -1;
+            else possiblyQueue(info, m.author.id, m, suppress);
           });
-        }
+        });
 
         client.reply(m, 'Finished loading...');
       } else {
