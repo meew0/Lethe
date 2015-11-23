@@ -57,7 +57,6 @@ client.on('message', m => {
     if (!boundChannel) return;
     client.reply(m, `Unbinding from <#${boundChannel.id}> and destroying voice connection`);
     playQueue = [];
-    if (currentStream) currentStream.destroy();
     client.internal.leaveVoiceChannel();
     boundChannel = false;
     currentStream = false;
@@ -69,7 +68,6 @@ client.on('message', m => {
   if (!m.channel.equals(boundChannel)) return;
 
   if (m.content.startsWith(`${botMention} n`)) { // next
-    currentStream.destroy();
     playStopped();
   }
 
