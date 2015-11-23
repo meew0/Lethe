@@ -161,8 +161,6 @@ client.on('message', m => {
             }
           });
         });
-
-        client.reply(m, 'Finished loading...');
       } else {
         client.reply(m, 'There was an error finding playlist with that id.');
         return;
