@@ -153,11 +153,12 @@ client.on('message', m => {
             elem.contentDetails.videoId;
           ytdl.getInfo(requestUrl, (err, info) => {
             if (err) handleYTError(err);
-
-            var suppress;
-            if (idx == 1) suppress = body.items.length - 2;
-            if (idx == 2) suppress = -1;
-            possiblyQueue(info, m.author.id, m, suppress);
+            else {
+              var suppress;
+              if (idx == 1) suppress = body.items.length - 2;
+              if (idx == 2) suppress = -1;
+              possiblyQueue(info, m.author.id, m, suppress);
+            }
           });
         });
 
