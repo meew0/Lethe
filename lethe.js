@@ -27,10 +27,11 @@ var currentVideo = false;
 var botMention = false;
 
 // Handling api key
-if(process.argv[4])
+if (process.argv[4]) {
   var apiKey = process.argv[4];
-else
+} else {
   var apiKey = false;
+}
 
 client.on('ready', () => {
   botMention = `<@${client.internal.user.id}>`;
@@ -75,54 +76,55 @@ client.on('message', m => {
     playStopped();
   }
 
-  if (m.content.startsWith(`${botMention} yq`) // youtube
-    || m.content.startsWith(`${botMention} qq`) // queue
-    || m.content.startsWith(`${botMention} pq`)
-    || m.content.startsWith(`${botMention} ytq`)) { // play
+  if (m.content.startsWith(`${botMention} yq`) // youtube query
+    || m.content.startsWith(`${botMention} qq`) // queue query
+    || m.content.startsWith(`${botMention} pq`) // play query
+    || m.content.startsWith(`${botMention} ytq`)) {
 
-    if(apiKey==false){
+    if (apiKey == false) {
       client.reply(m, 'Search is disabled (no API KEY found).');
       return;
     }
 
-    var q = "";
+    var q = '';
     var args = spliceArguments(m.content);
 
-    for(var i = 1; i < args.length; i++) {
-      q+=args[i];
+    for (var i = 1; i < args.length; i++) {
+      q += args[i];
     }
 
-    if(!q){
+    if (!q) {
       client.reply(m, 'You need to specify a search parameter.');
       return;
     }
 
-    var requestUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+escape(q) +"&key="+apiKey;
+    var requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
+      '?part=snippet&q=' + escape(q) + '&key=' + apiKey;
 
-    request(requestUrl, function (error, response, body) {
+    request(requestUrl, (error, response, body) => {
       if (!error && response.statusCode == 200) {
         body = JSON.parse(body);
-        if(body.items.length==0){
+        if (body.items.length == 0) {
           client.reply(m, 'Your query gave 0 results.');
           return;
         }
+
         requestUrl = 'http://www.youtube.com/watch?v=' + body.items[0].id.videoId;
-          ytdl.getInfo(requestUrl, (err, info) => {
-            if (err) handleYTError(err);
-            else possiblyQueue(info, m.author.id, m);
-          });
-      }
-      else {
-        client.reply(m,'There was an error searching.')
+        ytdl.getInfo(requestUrl, (err, info) => {
+          if (err) handleYTError(err);
+          else possiblyQueue(info, m.author.id, m);
+        });
+      } else {
+        client.reply(m, 'There was an error searching.');
         return;
       }
-    })
+    });
+
     return; // have to stop propagation
   }
 
-  if(m.content.startsWith(`${botMention} pl`)){
-
-    if(apiKey==false){
+  if (m.content.startsWith(`${botMention} pl`)) { // playlist
+    if (apiKey == false) {
       client.reply(m, 'Playlist adding is disabled (no API KEY found).');
       return;
     }
@@ -134,30 +136,34 @@ client.on('message', m => {
       return;
     }
 
-    var requestUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId='+pid+'&key='+apiKey;
+    var requestUrl = 'https://www.googleapis.com/youtube/v3/playlistItems' +
+      `?part=contentDetails&maxResults=50&playlistId=${pid}&key=${apiKey}`;
 
-    request(requestUrl, function (error, response, body) {
+    request(requestUrl, (error, response, body) => {
       if (!error && response.statusCode == 200) {
         body = JSON.parse(body);
-        if(body.items.length==0){
+        if (body.items.length == 0) {
           client.reply(m, 'That playlist has no videos.');
           return;
         }
-        client.reply(m, 'Loading '+body.items.length+' videos...');
+
+        client.reply(m, `Loading ${body.items.length} videos...`);
         for (var i = 0; i < body.items.length; i++) {
-          requestUrl = 'http://www.youtube.com/watch?v=' + body.items[i].contentDetails.videoId;
+          requestUrl = 'http://www.youtube.com/watch?v=' +
+            body.items[i].contentDetails.videoId;
           ytdl.getInfo(requestUrl, (err, info) => {
             if (err) handleYTError(err);
-            else possiblyQueue(info, m.author.id, m,true);
+            else possiblyQueue(info, m.author.id, m, true);
           });
         }
-        client.reply(m,'Finished loading...');
-      }
-      else {
-        client.reply(m,'There was an error finding playlist with that id.')
+
+        client.reply(m, 'Finished loading...');
+      } else {
+        client.reply(m, 'There was an error finding playlist with that id.');
         return;
       }
-    })
+    });
+
     return;
   }
 
@@ -179,14 +185,14 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} sh`) ||
       m.content.startsWith(`${botMention} shuffle`)) { // list saved
 
-    if(playQueue.length<2) {
-      client.reply(m, "Not enough songs in the queue.");
+    if (playQueue.length < 2) {
+      client.reply(m, 'Not enough songs in the queue.');
       return;
-    }
-    else {
+    } else {
       shuffle(playQueue);
-      client.reply(m, "Songs in the queue have been shuffled.");
+      client.reply(m, 'Songs in the queue have been shuffled.');
     }
+
     return;
   }
 
@@ -323,20 +329,22 @@ function nextInQueue() {
 }
 
 function shuffle(array) {
-    var counter = array.length, temp, index;
+  var counter = array.length;
+  var temp;
+  var index;
 
-    // While there are elements in the array
-    while (counter > 0) {
-        index = Math.floor(Math.random() * counter);
+  // While there are elements in the array
+  while (counter > 0) {
+    index = Math.floor(Math.random() * counter);
 
-        counter--;
+    counter--;
 
-        temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-    }
+    temp = array[counter];
+    array[counter] = array[index];
+    array[index] = temp;
+  }
 
-    return array;
+  return array;
 }
 
 function error(argument) {
