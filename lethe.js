@@ -107,6 +107,42 @@ client.on('message', m => {
     return; // have to stop propagation
   }
 
+  if(m.content.startsWith(`${botMention} pl`)){
+
+    var pid = spliceArguments(m.content)[1];
+
+    if (!pid) {
+      client.reply(m, 'You need to specify a playlist ID!');
+      return;
+    }
+
+    var requestUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId='+pid+'&key='+apiKey;
+
+    request(requestUrl, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        body = JSON.parse(body);
+        if(body.items.length==0){
+          client.reply(m, 'That playlist has no videos.');
+          return;
+        }
+        client.reply(m, 'Loading '+body.items.length+' videos...');
+        for (var i = 0; i < body.items.length; i++) {
+          requestUrl = 'http://www.youtube.com/watch?v=' + body.items[i].contentDetails.videoId;
+          ytdl.getInfo(requestUrl, (err, info) => {
+            if (err) handleYTError(err);
+            else possiblyQueue(info, m.author.id, m,true);
+          });
+        }
+        client.reply(m,'Finished loading...');
+      }
+      else {
+        client.reply(m,'There was an error finding playlist with that id.')
+        return;
+      }
+    })
+    return;
+  }
+  
   if (m.content.startsWith(`${botMention} y`) // youtube
     || m.content.startsWith(`${botMention} q`) // queue
     || m.content.startsWith(`${botMention} p`)) { // play
@@ -196,14 +232,16 @@ function saveVideo(video, vid, keywords, m) {
   Saved.write();
 }
 
-function possiblyQueue(video, userId, m) {
+function possiblyQueue(video, userId, m, supress) {
   video.userId = userId;
+  supress = supress || false;
   reason = shouldDisallowQueue(playQueue, video);
   if (reason) {
     client.reply(m, `You can't queue this video right now! Reason: ${reason}`);
   } else {
     playQueue.push(video);
-    client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
+    if(!supress)
+      client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
 
     // Start playing if not playing yet
     if (!currentVideo) nextInQueue();
