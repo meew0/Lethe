@@ -23,7 +23,11 @@ var currentVideo = false;
 
 var botMention = false;
 
-var apiKey = "AIzaSyD_I_2Kgy4fkNoOnUcJ0PSN3jYVtmLmbyI";
+// Handling api key
+if(process.argv[4])
+  var apiKey = process.argv[4];
+else
+  var apiKey = false;
 
 client.on('ready', () => {
   botMention = `<@${client.internal.user.id}>`;
@@ -72,6 +76,12 @@ client.on('message', m => {
     || m.content.startsWith(`${botMention} qq`) // queue
     || m.content.startsWith(`${botMention} pq`)
     || m.content.startsWith(`${botMention} ytq`)) { // play
+
+    if(apiKey==false){
+      client.reply(m, 'Search is disabled (no API KEY found).');
+      return;
+    }
+
     var q = "";
     var args = spliceArguments(m.content);
 
@@ -108,6 +118,11 @@ client.on('message', m => {
   }
 
   if(m.content.startsWith(`${botMention} pl`)){
+
+    if(apiKey==false){
+      client.reply(m, 'Playlist adding is disabled (no API KEY found).');
+      return;
+    }
 
     var pid = spliceArguments(m.content)[1];
 
