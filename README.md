@@ -7,6 +7,8 @@ Simple YouTube playback bot for Discord. Warning: Lethe is absolutely not stable
 
 Until hydrabolt/discord.js#60 is fixed, `next` and `destroy` won't work. You can try removing the offending line in discord.js, however there's no guarantee that it'll work.
 
+If node-opus is not present, playback will silently fail. Make sure it's installed correctly (it requires Python)
+
 ## Usage
 Run Lethe using the email and password as command line arguments:
 
