@@ -1,13 +1,22 @@
 # Lethe
 Simple YouTube playback bot for Discord. Warning: Lethe is absolutely not stable at all! It is likely to either not run at all or crash soon after running. If you experience anything like that, please report an [issue](https://github.com/meew0/Lethe/issues)!
 
-## Dependencies
-* The ones in package.json
-* ffmpeg, it needs to be installed and in your path
+## Installation
 
-Until hydrabolt/discord.js#60 is fixed, `next` and `destroy` won't work. You can try removing the offending line in discord.js, however there's no guarantee that it'll work.
+If you're on Windows, you should install node-opus before everything else, as there may be problems with the installation:
+```
+$ npm install node-opus
+```
+If there are any, follow the instructions on how to fix them. See issue #9 for more information.
 
-If node-opus is not present, playback will silently fail. Make sure it's installed correctly (it requires Python). See #9.
+Then, install [ffmpeg](https://www.ffmpeg.org/download.html). Depending on your system, it may already be preinstalled (run `ffmpeg` in a terminal, if it works, then it's installed). On Windows, after installing it, make sure it's in your PATH environment variable, otherwise it won't be found by Lethe.
+
+Finally, install Lethe itself:
+```
+$ npm install meew0/Lethe
+```
+
+As a last step, you might want to comment out line 71 in `discord.js/src/Voice/VoiceConnection.js`. It should read `this.instream.destroy();`. This may work around hydrabolt/discord.js#60, which prevents `next` and `destroy` from working.
 
 ## Usage
 Run Lethe using the email and password as command line arguments:
