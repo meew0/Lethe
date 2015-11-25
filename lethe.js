@@ -194,6 +194,11 @@ client.on('message', m => {
     return;
   }
 
+  if (m.content.startsWith(`${botMention} link`)) {
+    if (currentVideo) client.reply(m, `<${currentVideo.loaderUrl}>`);
+    return; // stop propagation
+  }
+
   if (m.content.startsWith(`${botMention} list s`)) { // list saved
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
