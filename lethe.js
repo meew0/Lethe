@@ -31,7 +31,7 @@ if (process.argv[4]) {
 }
 
 client.on('ready', () => {
-  botMention = `<@${client.internal.user.id}>`;
+  botMention = `<@${client.user.id}>`;
   console.log(`Bot mention: ${botMention}`);
 });
 
