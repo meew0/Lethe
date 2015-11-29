@@ -16,8 +16,6 @@ Finally, install Lethe itself:
 $ npm install meew0/Lethe
 ```
 
-As a last step, you might want to comment out line 71 in `discord.js/src/Voice/VoiceConnection.js`. It should read `this.instream.destroy();`. This may work around hydrabolt/discord.js#60, which prevents `next` and `destroy` from working.
-
 ## Usage
 Run Lethe using the email and password as command line arguments:
 
