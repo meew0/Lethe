@@ -1,6 +1,8 @@
 # Lethe
 Simple YouTube playback bot for Discord. Warning: Lethe is absolutely not stable at all! It is likely to either not run at all or crash soon after running. If you experience anything like that, please report an [issue](https://github.com/meew0/Lethe/issues)!
 
+Lethe works best on Linux, but it can also be installed on Windows, though this is a lot more difficult and not recommended. **If you're on Windows and no sound plays at all, but the "queued" and "playing" messages are sent, then you haven't installed node-opus correctly! Make sure you have the correct versions of python, VS etc. that node-gyp requires in the correct places.**
+
 ## Installation
 
 If you're on Windows, you should install node-opus before everything else, as there may be problems with the installation:
