@@ -317,6 +317,11 @@ function play(video) {
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
     currentStream = YoutubeStream.getStream(video.loaderUrl);
+
+    currentStream.on('error', (err) => {
+      boundChannel.sendMessage(`There was an error during playback! **${err}**`);
+    });
+
     currentStream.on('end', () => setTimeout(playStopped, 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
