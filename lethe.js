@@ -279,6 +279,17 @@ function spliceArguments(message, after) {
 function saveVideo(video, vid, keywords, m) {
   simplified = VideoFormat.simplify(video, vid);
   if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${VideoFormat.simplePrint(Saved.saved.videos[keywords])} is already saved as *${keywords}*! Overwriting.`);
+
+  // Check for duplicate videos
+  for (var key in Saved.saved.videos) {
+    if (Saved.saved.videos.hasOwnProperty(key)) {
+      var dupe = Saved.saved.videos[key];
+      if (dupe.vid === vid) {
+        client.reply(m, `Warning: This video is already saved as *${key}*! Adding it anyway as *${keywords}*`);
+      }
+    }
+  }
+
   Saved.saved.videos[keywords] = simplified;
   client.reply(m, `Saved video ${VideoFormat.prettyPrint(video)} as *${keywords}*`);
   Saved.write();
