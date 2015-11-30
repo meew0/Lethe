@@ -91,7 +91,7 @@ client.on('message', m => {
     var query = args.join(' ');
 
     var requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
-      '?part=snippet&q=' + escape(query) + '&key=' + apiKey;
+      `?part=snippet&q=${escape(query)}&key=${apiKey}`;
 
     request(requestUrl, (error, response, body) => {
       if (!error && response.statusCode == 200) {
