@@ -104,10 +104,14 @@ client.on('message', m => {
           return;
         }
 
-        requestUrl = 'http://www.youtube.com/watch?v=' + body.items[0].id.videoId;
+        var vid = body.items[0].id.videoId;
+        requestUrl = 'http://www.youtube.com/watch?v=' + vid;
         ytdl.getInfo(requestUrl, (err, info) => {
           if (err) handleYTError(err);
-          else possiblyQueue(info, m.author.id, m);
+          else {
+            info.vid = vid;
+            possiblyQueue(info, m.author.id, m);
+          }
         });
       } else {
         client.reply(m, 'There was an error searching.');
@@ -145,13 +149,14 @@ client.on('message', m => {
         client.reply(m, `Loading ${body.items.length} videos...`);
         var suppress = 0;
         body.items.forEach((elem, idx) => {
-          requestUrl = 'http://www.youtube.com/watch?v=' +
-            elem.contentDetails.videoId;
+          var vid = elem.contentDetails.videoId;
+          requestUrl = 'http://www.youtube.com/watch?v=' + vid;
           ytdl.getInfo(requestUrl, (err, info) => {
             if (err) handleYTError(err);
             else {
               if (idx == 1) suppress = body.items.length - 2;
               if (idx == 2) suppress = -1;
+              info.vid = vid;
               possiblyQueue(info, m.author.id, m, suppress);
             }
           });
@@ -233,9 +238,13 @@ client.on('message', m => {
 
     if (vid === 'current') {
       if (currentVideo) vid = currentVideo.vid;
+      else {
+        client.reply(m, `Couldn't retrieve video information of current video!`);
+      }
     }
 
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
+    console.log(vid);
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
       else saveVideo(info, vid, splitArgs[1], m);
@@ -265,7 +274,10 @@ function parseVidAndQueue(vid, m, suppress) {
   var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
   ytdl.getInfo(requestUrl, (err, info) => {
     if (err) handleYTError(err);
-    else possiblyQueue(info, m.author.id, m, suppress);
+    else {
+      info.vid = vid;
+      possiblyQueue(info, m.author.id, m, suppress);
+    }
   });
 }
 
