@@ -102,14 +102,7 @@ client.on('message', m => {
         }
 
         var vid = body.items[0].id.videoId;
-        requestUrl = 'http://www.youtube.com/watch?v=' + vid;
-        ytdl.getInfo(requestUrl, (err, info) => {
-          if (err) handleYTError(err);
-          else {
-            info.vid = vid;
-            possiblyQueue(info, m.author.id, m);
-          }
-        });
+        getInfoAndQueue(vid, m);
       } else {
         client.reply(m, 'There was an error searching.');
         return;
@@ -147,16 +140,9 @@ client.on('message', m => {
         var suppress = 0;
         body.items.forEach((elem, idx) => {
           var vid = elem.contentDetails.videoId;
-          requestUrl = 'http://www.youtube.com/watch?v=' + vid;
-          ytdl.getInfo(requestUrl, (err, info) => {
-            if (err) handleYTError(err);
-            else {
-              if (idx == 1) suppress = body.items.length - 2;
-              if (idx == 2) suppress = -1;
-              info.vid = vid;
-              possiblyQueue(info, m.author.id, m, suppress);
-            }
-          });
+          if (idx == 1) suppress = body.items.length - 2;
+          if (idx == 2) suppress = -1;
+          getInfoAndQueue(vid, m, suppress);
         });
       } else {
         client.reply(m, 'There was an error finding playlist with that id.');
@@ -266,7 +252,11 @@ function parseVidAndQueue(vid, m, suppress) {
     return;
   }
 
-  var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
+  getInfoAndQueue(vid, m, suppress);
+}
+
+function getInfoAndQueue(vid, m, suppress) {
+  requestUrl = 'http://www.youtube.com/watch?v=' + vid;
   ytdl.getInfo(requestUrl, (err, info) => {
     if (err) handleYTError(err);
     else {
