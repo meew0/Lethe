@@ -81,20 +81,17 @@ client.on('message', m => {
       return;
     }
 
-    var q = '';
-    var args = spliceArguments(m.content);
+    var args = spliceArguments(m.content)[1];
 
-    for (var i = 1; i < args.length; i++) {
-      q += args[i];
-    }
-
-    if (!q) {
+    if (!args) {
       client.reply(m, 'You need to specify a search parameter.');
       return;
     }
 
+    var query = args.join(' ');
+
     var requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
-      '?part=snippet&q=' + escape(q) + '&key=' + apiKey;
+      '?part=snippet&q=' + escape(query) + '&key=' + apiKey;
 
     request(requestUrl, (error, response, body) => {
       if (!error && response.statusCode == 200) {
