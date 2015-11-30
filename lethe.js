@@ -285,8 +285,8 @@ function possiblyQueue(video, userId, m, suppress) {
     client.reply(m, `You can't queue this video right now! Reason: ${reason}`);
   } else {
     playQueue.push(video);
-    if (suppress == 0) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}   **[${VideoFormat.prettyTime(video.length_seconds * 1000)}]**`);
-    else if (suppress > -1) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}   **[${VideoFormat.prettyTime(video.length_seconds * 1000)}]** and ${suppress} other videos`);
+    if (suppress == 0) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
+    else if (suppress > -1) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)} and ${suppress} other videos`);
 
     // Start playing if not playing yet
     if (!currentVideo) nextInQueue();
@@ -324,7 +324,7 @@ function play(video) {
 
     currentStream.on('end', () => setTimeout(playStopped, 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
-      boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}  **[${VideoFormat.prettyTime(currentVideo.length_seconds * 1000)}]**`);
+      boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
     });
   }
 }
