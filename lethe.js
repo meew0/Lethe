@@ -31,7 +31,7 @@ if (process.argv[4]) {
 }
 
 client.on('ready', () => {
-  botMention = `<@${client.internal.user.id}>`;
+  botMention = `<@${client.user.id}>`;
   console.log(`Bot mention: ${botMention}`);
 });
 
@@ -194,6 +194,11 @@ client.on('message', m => {
     return;
   }
 
+  if (m.content.startsWith(`${botMention} link`)) {
+    if (currentVideo) client.reply(m, `<${currentVideo.loaderUrl}>`);
+    return; // stop propagation
+  }
+
   if (m.content.startsWith(`${botMention} list s`)) { // list saved
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
@@ -312,6 +317,11 @@ function play(video) {
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
     currentStream = YoutubeStream.getStream(video.loaderUrl);
+
+    currentStream.on('error', (err) => {
+      boundChannel.sendMessage(`There was an error during playback! **${err}**`);
+    });
+
     currentStream.on('end', () => setTimeout(playStopped, 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}  **[${VideoFormat.prettyTime(currentVideo.length_seconds * 1000)}]**`);

@@ -22,7 +22,8 @@
   "dependencies": {
     "discord.js": "hydrabolt/discord.js#master",
     "request": "^2.67.0",
-    "ytdl-core": "^0.7.6"
+    "ytdl-core": "^0.7.6",
+    "node-opus": "^0.1.11"
   },
   "version": "1.0.0"
 }
