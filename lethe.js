@@ -228,7 +228,14 @@ client.on('message', m => {
     }
 
     var splitArgs = spliceArguments(argument, 1);
-    var requestUrl = 'http://www.youtube.com/watch?v=' + splitArgs[0];
+
+    var vid = splitArgs[0];
+
+    if (vid === 'current') {
+      if (currentVideo) vid = currentVideo.vid;
+    }
+
+    var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
       else saveVideo(info, splitArgs[0], splitArgs[1], m);
