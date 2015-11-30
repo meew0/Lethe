@@ -238,7 +238,7 @@ client.on('message', m => {
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
-      else saveVideo(info, splitArgs[0], vid, m);
+      else saveVideo(info, vid, splitArgs[1], m);
     });
   }
 
