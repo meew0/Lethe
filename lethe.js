@@ -185,8 +185,7 @@ client.on('message', m => {
     });
   }
 
-  if (m.content.startsWith(`${botMention} sh`) ||
-      m.content.startsWith(`${botMention} shuffle`)) { // list saved
+  if (m.content.startsWith(`${botMention} sh`)) { // shuffle
 
     if (playQueue.length < 2) {
       client.reply(m, 'Not enough songs in the queue.');
