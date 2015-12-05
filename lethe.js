@@ -168,6 +168,10 @@ client.on('message', m => {
     });
   }
 
+  if (m.content.startsWith(`${botMention} r`)) { // replay
+    playQueue.push(currentVideo);
+  }
+
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
     if (playQueue.length < 2) {
       client.reply(m, 'Not enough songs in the queue.');
