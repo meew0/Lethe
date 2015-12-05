@@ -234,7 +234,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} t`)) { // time
     var streamTime = client.internal.voiceConnection.streamTime; // in ms
     var videoTime = currentVideo.length_seconds;
-    client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${(streamTime / (videoTime * 1000)).toFixed(2)} %)`);
+    client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${(streamTime / (videoTime * 10)).toFixed(2)} %)`);
   }
 });
 
