@@ -88,8 +88,6 @@ client.on('message', m => {
       return;
     }
 
-    var query = args.join(' ');
-
     var requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
       `?part=snippet&q=${escape(query)}&key=${apiKey}`;
 
