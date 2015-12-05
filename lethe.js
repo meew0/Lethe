@@ -89,7 +89,7 @@ client.on('message', m => {
     }
 
     var requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
-      `?part=snippet&q=${escape(query)}&key=${apiKey}`;
+      `?part=snippet&q=${escape(args)}&key=${apiKey}`;
 
     request(requestUrl, (error, response, body) => {
       if (!error && response.statusCode == 200) {
@@ -168,6 +168,7 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} r`)) { // replay
     playQueue.push(currentVideo);
+    client.reply(m, `Queued ${VideoFormat.prettyPrint(currentVideo)}`);
   }
 
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
