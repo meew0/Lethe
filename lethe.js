@@ -200,8 +200,20 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} l`)) { // list
     var formattedList = 'Here are the videos currently in the play queue, from first added to last added: \n';
     formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
+
+    var shouldBreak = false;
+
     playQueue.forEach((video, idx) => {
-      formattedList += `${idx + 1}. ${VideoFormat.prettyPrintWithUser(video)}\n`;
+      if (shouldBreak) return;
+
+      var formattedVideo = `${idx + 1}. ${VideoFormat.prettyPrintWithUser(video)}\n`;
+
+      if ((formattedList.length + formattedVideo.length) > 1950) {
+        formattedList += `... and ${playQueue.length - idx} more`;
+        shouldBreak = true;
+      } else {
+        formattedList += formattedVideo;
+      }
     });
     client.reply(m, formattedList);
   }
