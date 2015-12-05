@@ -44,6 +44,7 @@ The following commands will only work inside the text channel Lethe was bound to
 `list`: Lists the videos on the queue.  
 `link`: Gets the link to view the video currently playing.  
 `next`: Stops the current playback and skips to the next video in the queue.  
+`replay`: Adds the current video again to the back of the queue.  
 `save [id] [keyword]` Saves a video under a keyword. It can later be played back using `yt`.  
 `time`: Gets the time the video is currently at.  
 `yq [search-value]`: Searches a youtube video that matches the search value.  
