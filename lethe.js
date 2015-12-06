@@ -3,7 +3,13 @@ var Discord = require('discord.js');
 var ytdl = require('ytdl-core');
 var request = require('request');
 var url = require('url');
+
+// Output version information in console
 var git = require('git-rev');
+
+git.short(commit => git.branch(branch => {
+  console.log(`Lethe#${branch}@${commit}`);
+}));
 
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
