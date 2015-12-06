@@ -3,6 +3,7 @@ var Discord = require('discord.js');
 var ytdl = require('ytdl-core');
 var request = require('request');
 var url = require('url');
+var git = require('git-rev');
 
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
@@ -39,6 +40,13 @@ client.on('ready', () => {
 
 client.on('message', m => {
   if (!botMention) return;
+
+  if (m.content.startsWith(`${botMention} info`)) {
+    git.short(commit => git.branch(branch => {
+      client.reply(m, `Version: \`Lethe#${branch}@${commit}\`. Info about Lethe can be found at https://github.com/meew0/Lethe.`);
+    }));
+    return;
+  }
 
   if (m.content.startsWith(`${botMention} i`)) { // init
     if (boundChannel) return;
