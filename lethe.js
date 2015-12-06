@@ -10,6 +10,8 @@ var YoutubeStream = require('./lib/youtube-stream.js');
 var Saved = require('./lib/saved.js');
 Saved.read();
 
+var Config = require('./lib/config.js');
+
 var client = new Discord.Client();
 
 // Handle discord.js warnings
