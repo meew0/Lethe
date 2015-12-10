@@ -360,7 +360,7 @@ function play(video) {
       boundChannel.sendMessage(`There was an error during playback! **${err}**`);
     });
 
-    currentStream.on('end', () => setTimeout(playStopped, 8000)); // 8 second leeway for bad timing
+    currentStream.on('end', () => setTimeout(playStopped, Config.timeOffset)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
     });
