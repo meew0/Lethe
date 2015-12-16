@@ -320,7 +320,7 @@ function possiblyQueue(video, userId, m, suppress) {
   suppress = (suppress === undefined) ? false : suppress;
   reason = shouldDisallowQueue(playQueue, video);
   if (reason) {
-    client.reply(m, `You can't queue this video right now! Reason: ${reason}`);
+    client.reply(m, `You can't queue ${VideoFormat.simplePrint(video)} right now! Reason: ${reason}`);
   } else {
     playQueue.push(video);
     if (suppress == 0) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
