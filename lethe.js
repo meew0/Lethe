@@ -47,14 +47,14 @@ client.on('ready', () => {
 client.on('message', m => {
   if (!botMention) return;
 
-  if (m.content.startsWith(`${botMention} info`)) {
+  if (checkCommand(m, 'info') && m.content.startsWith(`${botMention} info`)) {
     git.short(commit => git.branch(branch => {
       client.reply(m, `Version: \`Lethe#${branch}@${commit}\`. Info about Lethe can be found at https://github.com/meew0/Lethe.`);
     }));
     return;
   }
 
-  if (m.content.startsWith(`${botMention} i`)) { // init
+  if (checkCommand(m, 'init') && m.content.startsWith(`${botMention} i`)) { // init
     if (boundChannel) return;
     var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
@@ -69,7 +69,7 @@ client.on('message', m => {
     }
   }
 
-  if (m.content.startsWith(`${botMention} d`)) { // destroy
+  if (checkCommand(m, 'destroy') && m.content.startsWith(`${botMention} d`)) { // destroy
     if (!boundChannel) return;
     client.reply(m, `Unbinding from <#${boundChannel.id}> and destroying voice connection`);
     playQueue = [];
@@ -83,11 +83,11 @@ client.on('message', m => {
   // Only respond to other messages inside the bound channel
   if (!m.channel.equals(boundChannel)) return;
 
-  if (m.content.startsWith(`${botMention} n`)) { // next
+  if (checkCommand(m, 'next') && m.content.startsWith(`${botMention} n`)) { // next
     playStopped();
   }
 
-  if (m.content.startsWith(`${botMention} yq`) // youtube query
+  if (checkCommand(m, 'yq') && m.content.startsWith(`${botMention} yq`) // youtube query
     || m.content.startsWith(`${botMention} qq`) // queue query
     || m.content.startsWith(`${botMention} pq`) // play query
     || m.content.startsWith(`${botMention} ytq`)) {
@@ -126,7 +126,7 @@ client.on('message', m => {
     return; // have to stop propagation
   }
 
-  if (m.content.startsWith(`${botMention} pl`)) { // playlist
+  if (checkCommand(m, 'pl') && m.content.startsWith(`${botMention} pl`)) { // playlist
     if (apiKey == false) {
       client.reply(m, 'Playlist adding is disabled (no API KEY found).');
       return;
@@ -167,7 +167,7 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`${botMention} y`) // youtube
+  if (checkCommand(m, 'yt') && m.content.startsWith(`${botMention} y`) // youtube
     || m.content.startsWith(`${botMention} q`) // queue
     || m.content.startsWith(`${botMention} p`)) { // play
 
@@ -182,12 +182,12 @@ client.on('message', m => {
     });
   }
 
-  if (m.content.startsWith(`${botMention} r`)) { // replay
+  if (checkCommand(m, 'replay') && m.content.startsWith(`${botMention} r`)) { // replay
     playQueue.push(currentVideo);
     client.reply(m, `Queued ${VideoFormat.prettyPrint(currentVideo)}`);
   }
 
-  if (m.content.startsWith(`${botMention} sh`)) { // shuffle
+  if (checkCommand(m, 'shuffle') && m.content.startsWith(`${botMention} sh`)) { // shuffle
     if (playQueue.length < 2) {
       client.reply(m, 'Not enough songs in the queue.');
       return;
@@ -199,12 +199,12 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`${botMention} link`)) {
+  if (checkCommand(m, 'link') && m.content.startsWith(`${botMention} link`)) {
     if (currentVideo) client.reply(m, `<${currentVideo.loaderUrl}>`);
     return; // stop propagation
   }
 
-  if (m.content.startsWith(`${botMention} list s`)) { // list saved
+  if (checkCommand(m, 'list saved') && m.content.startsWith(`${botMention} list s`)) { // list saved
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
       if (Saved.saved.videos.hasOwnProperty(key)) {
@@ -216,7 +216,7 @@ client.on('message', m => {
     return; // so list doesn't get triggered
   }
 
-  if (m.content.startsWith(`${botMention} l`)) { // list
+  if (checkCommand(m, 'list') && m.content.startsWith(`${botMention} l`)) { // list
     var formattedList = 'Here are the videos currently in the play queue, from first added to last added: \n';
     formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
 
@@ -237,7 +237,7 @@ client.on('message', m => {
     client.reply(m, formattedList);
   }
 
-  if (m.content.startsWith(`${botMention} s`)) { // save
+  if (checkCommand(m, 'save') && m.content.startsWith(`${botMention} s`)) { // save
     var argument = spliceArguments(m.content)[1];
     if (!argument) {
       client.reply(m, 'You need to specify a video and a keyword!');
@@ -262,7 +262,7 @@ client.on('message', m => {
     });
   }
 
-  if (m.content.startsWith(`${botMention} t`)) { // time
+  if (checkCommand(m, 'time') && m.content.startsWith(`${botMention} t`)) { // time
     var streamTime = client.internal.voiceConnection.streamTime; // in ms
     var videoTime = currentVideo.length_seconds;
     client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${(streamTime / (videoTime * 10)).toFixed(2)} %)`);
@@ -368,7 +368,18 @@ function play(video) {
 }
 
 function userIsAdmin(user) {
-  return config.adminIds.indexOf(user.id) > -1;
+  return Config.adminIds.indexOf(user.id) > -1;
+}
+
+function checkCommand(m, command) {
+  if (Config.commandsRestrictedToAdmins[command]) {
+    if (!userIsAdmin(m.author.id)) {
+      client.reply(m, `You don't have permission to execute that command!`);
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function nextInQueue() {

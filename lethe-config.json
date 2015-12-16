@@ -9,5 +9,20 @@
   },
   "adminIds": [
     "66237334693085184"
-  ]
+  ],
+  "commandsRestrictedToAdmins": {
+    "init": true,
+    "destroy": true,
+    "yt": false,
+    "list": false,
+    "list saved": false,
+    "link": false,
+    "next": true,
+    "replay": false,
+    "save": false,
+    "time": false,
+    "yq": false,
+    "pl": false,
+    "shuffle": true
+  }
 }
