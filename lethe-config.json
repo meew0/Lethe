@@ -1,3 +1,4 @@
 {
-  "timeOffset": 8000
+  "timeOffset": 8000,
+  "maxLength": -1
 }
