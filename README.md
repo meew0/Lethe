@@ -54,3 +54,4 @@ The following commands will only work inside the text channel Lethe was bound to
 `time`: Gets the time the video is currently at.  
 `yq [search-value]`: Searches a youtube video that matches the search value.  
 `pl [playlist-id]`: Queues the 50 first videos of a playlist.
+`shuffle`: Shuffles the videos in the queue.
