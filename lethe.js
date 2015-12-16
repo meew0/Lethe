@@ -318,7 +318,7 @@ function saveVideo(video, vid, keywords, m) {
 function possiblyQueue(video, userId, m, suppress) {
   video.userId = userId;
   suppress = (suppress === undefined) ? false : suppress;
-  reason = shouldDisallowQueue(playQueue, video);
+  reason = shouldDisallowQueue(playQueue, video, Config);
   if (reason) {
     client.reply(m, `You can't queue ${VideoFormat.simplePrint(video)} right now! Reason: ${reason}`);
   } else {
