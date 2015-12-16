@@ -1,4 +1,5 @@
 {
   "timeOffset": 8000,
-  "maxLength": -1
+  "maxLength": -1,
+  "userQueueLimit": -1,
 }
