@@ -6,5 +6,8 @@
     "checkDuplicateVideo": false,
     "checkDuplicateUser": false,
     "checkVideoLength": false,
-  }
+  },
+  "adminIds": [
+    "66237334693085184"
+  ]
 }

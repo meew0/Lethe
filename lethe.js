@@ -367,6 +367,10 @@ function play(video) {
   }
 }
 
+function userIsAdmin(user) {
+  return config.adminIds.indexOf(user.id) > -1;
+}
+
 function nextInQueue() {
   if (playQueue.length > 0) {
     next = playQueue.shift();
