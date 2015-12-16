@@ -1,7 +1,7 @@
 # Lethe
-Simple YouTube playback bot for Discord. Warning: Lethe is absolutely not stable at all! It is likely to either not run at all or crash soon after running. If you experience anything like that, please report an [issue](https://github.com/meew0/Lethe/issues)!
+Simple YouTube playback bot for Discord. Lethe is WIP, so expect crashes (it has significantly improved from the past though!) Please report any crashes as a GitHub [issue](https://github.com/meew0/Lethe/issues).
 
-Lethe works best on Linux, but it can also be installed on Windows, though this is a lot more difficult and not recommended. **If you're on Windows and no sound plays at all, but the "queued" and "playing" messages are sent, then you haven't installed node-opus correctly! Make sure you have the correct versions of python, VS etc. that node-gyp requires in the correct places.**
+Lethe works best on Linux, but it can also be installed on Windows, though this is not recommended.
 
 ## Installation
 
@@ -32,6 +32,11 @@ Then, run commands over Discord using the bot's username mention as a prefix, fo
 ```
 
 Where "Bot" is your bot's username.
+
+## Troubleshooting
+
+* If an error along the lines of `Error: spawn help ENOENT` is written to the console when playing a video, then you don't have ffmpeg installed properly. Download it [here](https://www.ffmpeg.org/download.html) and make sure it's in your `PATH` so Lethe can find it.
+* If videos queue without errors, show the "playing video" message, but no audio is in the chat, then node-opus is most likely not installed correctly. This is often a problem on Windows. Make sure node-gyp has all required build dependencies installed and manually check the node-opus installation for errors.
 
 ## Commands
 
