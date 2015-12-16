@@ -12,6 +12,7 @@
   ],
   "commandsRestrictedToAdmins": {
     "init": true,
+    "info": false,
     "destroy": true,
     "yt": false,
     "list": false,
