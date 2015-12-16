@@ -2,4 +2,9 @@
   "timeOffset": 8000,
   "maxLength": -1,
   "userQueueLimit": -1,
+  "checksEnabled": {
+    "checkDuplicateVideo": false,
+    "checkDuplicateUser": false,
+    "checkVideoLength": false,
+  }
 }
