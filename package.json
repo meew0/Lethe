@@ -23,7 +23,8 @@
     "discord.js": "hydrabolt/discord.js#master",
     "request": "^2.67.0",
     "ytdl-core": "^0.7.6",
-    "node-opus": "^0.1.11"
+    "node-opus": "^0.1.11",
+    "git-rev": "^0.2.1"
   },
   "version": "1.0.0"
 }
