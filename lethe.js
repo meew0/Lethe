@@ -46,6 +46,7 @@ client.on('ready', () => {
 
 client.on('message', m => {
   if (!botMention) return;
+  if (client.user.id == m.user.id) return;
 
   if (checkCommand(m, 'info') && m.content.startsWith(`${botMention} info`)) {
     git.short(commit => git.branch(branch => {
