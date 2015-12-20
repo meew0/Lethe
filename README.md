@@ -37,6 +37,7 @@ Where "Bot" is your bot's username.
 
 * If an error along the lines of `Error: spawn help ENOENT` is written to the console when playing a video, then you don't have ffmpeg installed properly. Download it [here](https://www.ffmpeg.org/download.html) and make sure it's in your `PATH` so Lethe can find it.
 * If videos queue without errors, show the "playing video" message, but no audio is in the chat, then node-opus is most likely not installed correctly. This is often a problem on Windows. Make sure node-gyp has all required build dependencies installed and manually check the node-opus installation for errors.
+* If every video you try to queue fails with a "An error occurred while getting video information!" message and it says `Error: Could not extract signature deciphering actions` in the console, then ytdl-core is outdated. `npm update` should fix it.
 
 ## Commands
 
