@@ -355,6 +355,8 @@ function handleYTError(err) {
     boundChannel.sendMessage('This video is unavailable in the country the bot is running in! Please try a different video.');
   } else if (err.message == 'Could not extract signature deciphering actions') {
     boundChannel.sendMessage('YouTube streams have changed their formats, please update `ytdl-core` to account for the change!');
+  } else if (err.message == 'status code 404') {
+    boundChannel.sendMessage('That video does not exist!');
   } else {
     boundChannel.sendMessage('An error occurred while getting video information! Please try a different video.');
   }
