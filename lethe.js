@@ -379,12 +379,12 @@ function playStopped() {
   if (client.internal.voiceConnection) client.internal.voiceConnection.stopPlaying();
 
   boundChannel.sendMessage(`Finished playing ${VideoFormat.simplePrint(currentVideo)}`);
+  lastVideo = currentVideo;
   currentVideo = false;
   nextInQueue();
 }
 
 function play(video) {
-  lastVideo = currentVideo;
   currentVideo = video;
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
