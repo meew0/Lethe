@@ -200,7 +200,13 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} r`)) { // replay
     if (!checkCommand(m, 'replay')) return;
-    playQueue.push(currentVideo);
+    var videoToPlay = currentVideo ? currentVideo : lastVideo ? lastVideo : false;
+    if (!videoToPlay) {
+      client.reply(m, 'No video has been played yet!');
+      return;
+    }
+
+    playQueue.push(videoToPlay);
     client.reply(m, `Queued ${VideoFormat.prettyPrint(currentVideo)}`);
   }
 
