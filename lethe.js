@@ -244,23 +244,31 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} l`)) { // list
     if (!checkCommand(m, 'list')) return;
-    var formattedList = 'Here are the videos currently in the play queue, from first added to last added: \n';
-    formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
 
-    var shouldBreak = false;
+    var formattedList = '';
+    if (currentVideo) formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
 
-    playQueue.forEach((video, idx) => {
-      if (shouldBreak) return;
+    if (playQueue.length == 0) {
+      formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
+    } else {
+      formattedList += 'Here are the videos currently in the play queue, from first added to last added: \n';
 
-      var formattedVideo = `${idx + 1}. ${VideoFormat.prettyPrintWithUser(video)}\n`;
+      var shouldBreak = false;
 
-      if ((formattedList.length + formattedVideo.length) > 1950) {
-        formattedList += `... and ${playQueue.length - idx} more`;
-        shouldBreak = true;
-      } else {
-        formattedList += formattedVideo;
-      }
-    });
+      playQueue.forEach((video, idx) => {
+        if (shouldBreak) return;
+
+        var formattedVideo = `${idx + 1}. ${VideoFormat.prettyPrintWithUser(video)}\n`;
+
+        if ((formattedList.length + formattedVideo.length) > 1950) {
+          formattedList += `... and ${playQueue.length - idx} more`;
+          shouldBreak = true;
+        } else {
+          formattedList += formattedVideo;
+        }
+      });
+    }
+
     client.reply(m, formattedList);
   }
 
