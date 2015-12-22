@@ -1,7 +1,7 @@
 var Discord = require('discord.js');
 
 var ytdl = require('ytdl-core');
-var request = require('request');
+var request = require('superagent');
 var url = require('url');
 
 // Output version information in console
@@ -243,7 +243,15 @@ client.on('message', m => {
       }
     }
 
-    client.reply(m, formattedList);
+    if (formattedList.length >= 2000) {
+      haste(formattedList, (key) => {
+        if (!key) {
+          client.reply(m, 'There was an error while retrieving the list of saved videos! Sorry :(');
+        }
+
+        client.reply(m, `http://hastebin.com/${key}`);
+      });
+    } else client.reply(m, formattedList);
     return; // so list doesn't get triggered
   }
 
@@ -465,6 +473,16 @@ function fancyReply(m, message) {
   } else {
     client.reply(m, message);
   }
+}
+
+function haste(data, cb) {
+  request.post('http://hastebin.com/documents').send(data).end((error, result) => {
+    if (err) {
+      cb(false);
+    } else {
+      cb(result.key);
+    }
+  });
 }
 
 function spitUp(m) {
