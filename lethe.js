@@ -331,6 +331,7 @@ function getInfoAndQueue(vid, m, suppress) {
     if (err) handleYTError(err);
     else {
       info.vid = vid;
+      info.obtainedFromGetInfo = true;
       possiblyQueue(info, m.author.id, m, suppress);
     }
   });
@@ -399,7 +400,7 @@ function play(video) {
   currentVideo = video;
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
-    currentStream = YoutubeStream.getStream(video.loaderUrl);
+    currentStream = YoutubeStream.getStream(video);
 
     currentStream.on('error', (err) => {
       boundChannel.sendMessage(`There was an error during playback! **${err}**`);
