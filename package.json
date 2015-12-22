@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/meew0/Lethe#readme",
   "dependencies": {
-    "discord.js": "hydrabolt/discord.js#master",
+    "discord.js": "hydrabolt/discord.js#e315fdafc6750ab45bad6f1927fee6d759b42381",
     "request": "^2.67.0",
     "ytdl-core": "^0.7.6",
     "node-opus": "^0.1.11",
