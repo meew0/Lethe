@@ -37,6 +37,9 @@ var lastVideo = false;
 
 var botMention = false;
 
+var shouldStockpile = false;
+var stockpile = '';
+
 // Handling api key
 if (process.argv[4]) {
   var apiKey = process.argv[4];
@@ -164,7 +167,8 @@ client.on('message', m => {
           return;
         }
 
-        client.reply(m, `Loading ${body.items.length} videos...`);
+        shouldStockpile = true;
+        fancyReply(m, `Loading ${body.items.length} videos...`);
         var suppress = 0;
         body.items.forEach((elem, idx) => {
           var vid = elem.contentDetails.videoId;
@@ -172,6 +176,7 @@ client.on('message', m => {
           if (idx == 2) suppress = -1;
           getInfoAndQueue(vid, m, suppress);
         });
+        spitUp();
       } else {
         client.reply(m, 'There was an error finding playlist with that id.');
         return;
@@ -361,11 +366,11 @@ function possiblyQueue(video, userId, m, suppress) {
   suppress = (suppress === undefined) ? false : suppress;
   reason = shouldDisallowQueue(playQueue, video, Config);
   if (!userIsAdmin(userId) && reason) {
-    client.reply(m, `You can't queue ${VideoFormat.simplePrint(video)} right now! Reason: ${reason}`);
+    fancyReply(m, `You can't queue ${VideoFormat.simplePrint(video)} right now! Reason: ${reason}`);
   } else {
     playQueue.push(video);
-    if (suppress == 0) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
-    else if (suppress > -1) client.reply(m, `Queued ${VideoFormat.prettyPrint(video)} and ${suppress} other videos`);
+    if (suppress == 0) fancyReply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
+    else if (suppress > -1) fancyReply(m, `Queued ${VideoFormat.prettyPrint(video)} and ${suppress} other videos`);
 
     // Start playing if not playing yet
     if (!currentVideo) nextInQueue();
@@ -452,6 +457,20 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function fancyReply(m, message) {
+  if (shouldStockpile) {
+    stockpile += message + '\n';
+  } else {
+    client.reply(m, message);
+  }
+}
+
+function spitUp(m) {
+  client.reply(m, stockpile);
+  stockpile = '';
+  shouldStockpile = false;
 }
 
 function error(argument) {
