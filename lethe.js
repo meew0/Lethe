@@ -478,7 +478,7 @@ function fancyReply(m, message) {
 
 function haste(data, cb) {
   request.post('http://hastebin.com/documents').send(data).end((error, result) => {
-    if (err) {
+    if (error) {
       cb(false);
     } else {
       cb(result.key);
