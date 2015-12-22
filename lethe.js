@@ -389,8 +389,8 @@ function play(video) {
   }
 }
 
-function userIsAdmin(user) {
-  return Config.adminIds.indexOf(user.id) > -1;
+function userIsAdmin(userId) {
+  return Config.adminIds.indexOf(userId) > -1;
 }
 
 function checkCommand(m, command) {
