@@ -275,13 +275,7 @@ client.on('message', m => {
     var splitArgs = spliceArguments(argument, 1);
 
     var vid = splitArgs[0];
-
-    if (vid === 'current') {
-      if (currentVideo) vid = currentVideo.vid;
-      else {
-        client.reply(m, `Couldn't retrieve video information of current video!`);
-      }
-    }
+    vid = resolveVid(vid, m);
 
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
@@ -299,19 +293,27 @@ client.on('message', m => {
 });
 
 function parseVidAndQueue(vid, m, suppress) {
-  if (/^http/.test(vid)) {
-    if (url.parse(vid, true).query.v) {
-      vid = url.parse(vid, true).query.v;
-    }
-  }
-
-  vid = Saved.possiblyRetrieveVideo(vid);
+  vid = resolveVid(vid, m);
   if (!vid) {
     client.reply(m, 'You need to specify a video!');
     return;
   }
 
   getInfoAndQueue(vid, m, suppress);
+}
+
+function resolveVid(thing, m) {
+  if (thing === 'current') {
+    if (currentVideo) return currentVideo.vid;
+    client.reply(m, 'No video currently playing!'); return false;
+  } else if (thing === 'last') {
+    if (lastVideo) return lastVideo.vid;
+    client.reply(m, 'No last played video found!'); return false;
+  } else if (/^http/.test(thing)) {
+    var parsed = url.parse(thing, true);
+    if (parsed.query.v) return parsed.query.v;
+    client.reply(m, 'Not a YouTube URL!'); return false;
+  } else return Saved.possiblyRetrieveVideo(thing);
 }
 
 function getInfoAndQueue(vid, m, suppress) {
