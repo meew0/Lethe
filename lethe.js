@@ -303,6 +303,7 @@ function parseVidAndQueue(vid, m, suppress) {
 }
 
 function resolveVid(thing, m) {
+  thing = thing.trim();
   if (thing === 'current') {
     if (currentVideo) return currentVideo.vid;
     client.reply(m, 'No video currently playing!'); return false;
