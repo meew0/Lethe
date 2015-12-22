@@ -159,9 +159,10 @@ client.on('message', m => {
     var requestUrl = 'https://www.googleapis.com/youtube/v3/playlistItems' +
       `?part=contentDetails&maxResults=50&playlistId=${pid}&key=${apiKey}`;
 
-    request(requestUrl, (error, response, body) => {
+    request.get(requestUrl).end((error, response) => {
       if (!error && response.statusCode == 200) {
-        body = JSON.parse(body);
+        console.log(response);
+        var body = response.body;
         if (body.items.length == 0) {
           client.reply(m, 'That playlist has no videos.');
           return;
