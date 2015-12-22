@@ -28,7 +28,12 @@ client.on('debug', (m) => console.log('[debug]', m));
 var playQueue = [];
 var boundChannel = false;
 var currentStream = false;
+
+// Video that is currently being played
 var currentVideo = false;
+
+// Last video played
+var lastVideo = false;
 
 var botMention = false;
 
@@ -373,6 +378,7 @@ function playStopped() {
 }
 
 function play(video) {
+  lastVideo = currentVideo;
   currentVideo = video;
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
