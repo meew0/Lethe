@@ -481,7 +481,7 @@ function haste(data, cb) {
     if (error) {
       cb(false);
     } else {
-      cb(result.key);
+      cb(result.body.key);
     }
   });
 }
