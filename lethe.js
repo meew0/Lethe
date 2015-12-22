@@ -250,7 +250,7 @@ client.on('message', m => {
           client.reply(m, 'There was an error while retrieving the list of saved videos! Sorry :(');
         }
 
-        client.reply(m, `http://hastebin.com/${key}`);
+        client.reply(m, `http://hastebin.com/${key}.md`);
       });
     } else client.reply(m, formattedList);
     return; // so list doesn't get triggered
