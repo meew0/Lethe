@@ -63,7 +63,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} info`)) {
     if (!checkCommand(m, 'info')) return;
     git.short(commit => git.branch(branch => {
-      client.reply(m, `Version: \`Lethe#${branch}@${commit}\`. Info about Lethe can be found at https://github.com/meew0/Lethe.`);
+      client.reply(m, `Version: \`Lethe#${branch}@${commit}\` (cf: ${Config.configRev} cr: ${CURRENT_REV}). Info about Lethe can be found at https://github.com/meew0/Lethe.`);
     }));
     return;
   }
