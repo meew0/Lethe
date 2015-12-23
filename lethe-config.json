@@ -1,5 +1,5 @@
 {
-  "configRev": 1,
+  "configRev": 2,
   "timeOffset": 8000,
   "maxLength": -1,
   "userQueueLimit": -1,
@@ -14,6 +14,7 @@
   "commandsRestrictedToAdmins": {
     "init": true,
     "info": false,
+    "help": false,
     "destroy": true,
     "yt": false,
     "list": false,

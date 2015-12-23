@@ -18,7 +18,7 @@ var Saved = require('./lib/saved.js');
 Saved.read();
 
 var Config = require('./lib/config.js');
-var CURRENT_REV = 1;
+var CURRENT_REV = 2;
 
 var client = new Discord.Client();
 
@@ -65,6 +65,12 @@ client.on('message', m => {
     git.short(commit => git.branch(branch => {
       client.reply(m, `Version: \`Lethe#${branch}@${commit}\` (cf: ${Config.configRev} cr: ${CURRENT_REV}). Info about Lethe can be found at https://github.com/meew0/Lethe.`);
     }));
+    return;
+  }
+
+  if (m.content.startsWith(`${botMention} h`)) { // help
+    if (!checkCommand(m, 'help')) return;
+    client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
     return;
   }
 
