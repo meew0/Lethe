@@ -122,16 +122,25 @@ client.on('message', m => {
     var requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
       `?part=snippet&q=${escape(args)}&key=${apiKey}`;
 
-    request(requestUrl, (error, response, body) => {
+    request(requestUrl, (error, response) => {
       if (!error && response.statusCode == 200) {
-        body = JSON.parse(body);
+        var body = response.body;
         if (body.items.length == 0) {
           client.reply(m, 'Your query gave 0 results.');
           return;
         }
 
-        var vid = body.items[0].id.videoId;
-        getInfoAndQueue(vid, m);
+        console.log(body.items);
+
+        for (var item of body.items) {
+          if (item.id.kind === 'youtube#video') {
+            var vid = item.id.videoId;
+            getInfoAndQueue(vid, m);
+            return;
+          }
+        }
+
+        client.reply(m, 'No video has been found!');
       } else {
         client.reply(m, 'There was an error searching.');
         return;
