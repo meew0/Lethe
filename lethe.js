@@ -130,8 +130,6 @@ client.on('message', m => {
           return;
         }
 
-        console.log(body.items);
-
         for (var item of body.items) {
           if (item.id.kind === 'youtube#video') {
             var vid = item.id.videoId;
