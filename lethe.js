@@ -422,6 +422,7 @@ function playStopped() {
   if (client.internal.voiceConnection) client.internal.voiceConnection.stopPlaying();
 
   boundChannel.sendMessage(`Finished playing ${VideoFormat.simplePrint(currentVideo)}`);
+  client.setStatus('online', null);
   lastVideo = currentVideo;
   currentVideo = false;
   nextInQueue();
@@ -440,6 +441,7 @@ function play(video) {
     currentStream.on('end', () => setTimeout(playStopped, Config.timeOffset || 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
+      client.setStatus('online', video.title);
     });
   }
 }
