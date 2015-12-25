@@ -391,11 +391,11 @@ function possiblyQueue(video, userId, m, suppress) {
   suppress = (suppress === undefined) ? false : suppress;
   reason = shouldDisallowQueue(playQueue, video, Config);
   if (!userIsAdmin(userId) && reason) {
-    fancyReply(m, `You can't queue ${VideoFormat.simplePrint(video)} right now! Reason: ${reason}`);
+    fancyReply(m, `You can't queue **${video.title}** right now! Reason: ${reason}`);
   } else {
     playQueue.push(video);
-    if (suppress == 0) fancyReply(m, `Queued ${VideoFormat.prettyPrint(video)}`);
-    else if (suppress > -1) fancyReply(m, `Queued ${VideoFormat.prettyPrint(video)} and ${suppress} other videos`);
+    if (suppress == 0) fancyReply(m, `Queued ${video.prettyPrint()}`);
+    else if (suppress > -1) fancyReply(m, `Queued ${video.prettyPrint()} and ${suppress} other videos`);
 
     // Start playing if not playing yet
     if (!currentVideo) nextInQueue();
@@ -420,7 +420,7 @@ function handleYTError(err) {
 function playStopped() {
   if (client.internal.voiceConnection) client.internal.voiceConnection.stopPlaying();
 
-  boundChannel.sendMessage(`Finished playing ${VideoFormat.simplePrint(currentVideo)}`);
+  boundChannel.sendMessage(`Finished playing **${currentVideo.title}**`);
   client.setStatus('online', null);
   lastVideo = currentVideo;
   currentVideo = false;
@@ -439,7 +439,7 @@ function play(video) {
 
     currentStream.on('end', () => setTimeout(playStopped, Config.timeOffset || 8000)); // 8 second leeway for bad timing
     connection.playRawStream(currentStream).then(intent => {
-      boundChannel.sendMessage(`Playing ${VideoFormat.prettyPrint(video)}`);
+      boundChannel.sendMessage(`Playing ${video.prettyPrint()}`);
       client.setStatus('online', video.title);
     });
   }
