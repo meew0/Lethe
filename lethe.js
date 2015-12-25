@@ -13,7 +13,6 @@ git.short(commit => git.branch(branch => {
 
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
-var YoutubeStream = require('./lib/youtube-stream.js');
 var Saved = require('./lib/saved.js');
 Saved.read();
 
@@ -431,7 +430,7 @@ function play(video) {
   currentVideo = video;
   if (client.internal.voiceConnection) {
     var connection = client.internal.voiceConnection;
-    currentStream = YoutubeStream.getStream(video);
+    currentStream = video.getStream();
 
     currentStream.on('error', (err) => {
       boundChannel.sendMessage(`There was an error during playback! **${err}**`);
