@@ -12,7 +12,6 @@ git.short(commit => git.branch(branch => {
 }));
 
 var shouldDisallowQueue = require('./lib/permission-checks.js');
-var VideoFormat = require('./lib/video-format.js');
 var Saved = require('./lib/saved.js');
 Saved.read();
 
