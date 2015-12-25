@@ -17,6 +17,8 @@ var YoutubeStream = require('./lib/youtube-stream.js');
 var Saved = require('./lib/saved.js');
 Saved.read();
 
+var YoutubeTrack = require('./lib/youtube-track.js');
+
 var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
 
@@ -357,13 +359,10 @@ function resolveVid(thing, m) {
 }
 
 function getInfoAndQueue(vid, m, suppress) {
-  requestUrl = 'http://www.youtube.com/watch?v=' + vid;
-  ytdl.getInfo(requestUrl, (err, info) => {
+  YoutubeTrack.getInfoFromVid(vid, m, (err, video) => {
     if (err) handleYTError(err);
     else {
-      info.vid = vid;
-      info.obtainedFromGetInfo = true;
-      possiblyQueue(info, m.author.id, m, suppress);
+      possiblyQueue(video, m.author.id, m, suppress);
     }
   });
 }
