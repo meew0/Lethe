@@ -74,9 +74,29 @@ client.on('message', m => {
  }
  if (m.content.startsWith(`?benstatus`)) { // a meme
     if (!checkCommand(m, `?benstatus`)) return
-    client.reply(m, 'Lips: Large; Feelings: Who cares; Race: Nigger')
+    client.reply(m, 'Lips: LARGE \n Feelings: WHO CARES \n Race: SHADOW-REALM BEAST')
     return;
  }
+ if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
+    if (!checkCommand(m, `?chancey`)) return
+    client.reply(m, ">attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.")
+    return;
+ }
+ if (m.content.startsWith(`?unipicture`)) { //uni
+    if (!checkCommand(m, `?unipicture`)) return
+    client.reply(m, "https://puu.sh/lTwMZ/0176bb7075.JPG")
+    return;
+ }
+if (m.content.startsWith(`?unitits`)) { //unitits
+  if (!checkCommand(m, `?unitits`)) return
+  client.reply(m, "http://puu.sh/lNwLG/47cc9cf362.png")
+  return;
+}
+if (m.content.startsWith(`?homieroast`)) { //when ya homie gets roasted
+  if (!checkCommand(m, `?homieroast`)) return
+  client.reply(m, "https://40.media.tumblr.com/a45905c3728d9e12c0cf75f1068dc1ca/tumblr_noto8ys9Uc1rraq2ko2_1280.jpg")
+  return;
+}
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
     client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
