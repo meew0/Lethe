@@ -106,17 +106,17 @@ if (m.content.startsWith(`?stayfree`)) { //FREE
   client.reply(m, "http://ecx.images-amazon.com/images/I/81GRxyntAaL._SL1500_.jpg")
   return;
 }
-if (m.content.startWith(`?demondion`)) { //fuckin spooked
+if (m.content.startsWith(`?demondion`)) { //fuckin spooked
   if (!checkCommand(m, `?demondion`)) return
   client.reply(m, "http://puu.sh/m9kCz/81350ea87f.jpg")
   return;
 }
-if (m.content.startWith(`?edgydion`)) { // the edge
+if (m.content.startsWith(`?edgydion`)) { // the edge
   if (!checkCommand(m, `?edgydion`)) return
   client.reply(m, "http://puu.sh/m9kC8/0d6ff8105a.jpg")
   return;
 }
-if (m.content.startWith(`?fang`)) { // what a fuckin retard
+if (m.content.startsWith(`?fang`)) { // what a fuckin retard
   if (!checkCommand(m, `?fang`)) return
   var fangRotation = Math.floor((Math.random()*100));
     if (fangRotation < 21){
@@ -135,7 +135,7 @@ if (m.content.startWith(`?fang`)) { // what a fuckin retard
   return;
 }
 }
-/* if (m.content.startWith(``)) { //memecontrol
+/* if (m.content.startsWith(``)) { //memecontrol
   if (!checkCommand(m, ``)) return
   client.reply(m, "")
   return;
