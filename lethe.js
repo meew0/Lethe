@@ -99,7 +99,7 @@ if (m.content.startsWith(`?homieroast`)) { //when ya homie gets roasted
 }
 if (m.content.startsWith(`?jimbo`)) { //shadow realm jimbo
   if (!checkCommand(m, `?jimbo`)) return
-  client.reply(m, "http://puu.sh/m1Ta5/910f1b8e35.png")
+  client.reply("http://puu.sh/m1Ta5/910f1b8e35.png")
   return;
 }
 if (m.content.startsWith(`?stayfree`)) { //FREE
