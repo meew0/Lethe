@@ -115,7 +115,6 @@ if (m.content.startsWith(`?fang`)) { // what a fuckin retard
   client.reply(m, fangArray[Math.floor(Math.random() * fangArray.length)])
   return;
 }
-}
 /* if (m.content.startsWith(``)) { //memecontrol
   if (!checkCommand(m, ``)) return
   client.reply(m, "")
