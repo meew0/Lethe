@@ -79,7 +79,7 @@ client.on('message', m => {
  }
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
-    client.reply(m, 'Commands - `?info, ?help, ?yt[youtube id], ?yq[search term], ?playlist, ?time, ?next, ?replay, ?list, ?link.`');
+    client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
     return;
   }
 
@@ -119,10 +119,10 @@ client.on('message', m => {
     playStopped();
   }
 
-  if (m.content.startsWith(`?yq`) // youtube query
-    || m.content.startsWith(`?qq`) // queue query
-    || m.content.startsWith(`?pq`) // play query
-    || m.content.startsWith(`?ytq`)) {
+  if (m.content.startsWith(`${botMention} yq`) // youtube query
+    || m.content.startsWith(`${botMention} qq`) // queue query
+    || m.content.startsWith(`${botMention} pq`) // play query
+    || m.content.startsWith(`${botMention} ytq`)) {
 
     if (!checkCommand(m, 'yq')) return;
 
@@ -157,9 +157,9 @@ client.on('message', m => {
           }
         }
 
-        client.reply(m, 'Sorry, Ebolabot found no videos matching your keywords. Try a different combination of search terms!');
+        client.reply(m, 'Sorry, not even Ebola-chan could find videos matching your keywords. Try a different combination of search terms!');
       } else {
-        client.reply(m, 'There was an error searching.');
+        client.reply(m, "....Something went wrong?");
         return;
       }
     });
@@ -213,11 +213,11 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`?y`) // youtube
-    || m.content.startsWith(`?q`) // queue
-    || m.content.startsWith(`?p`)) { // play
+  if (m.content.startsWith(`${botMention} y`) // youtube
+    || m.content.startsWith(`${botMention} q`) // queue
+    || m.content.startsWith(`${botMention} p`)) { // play
 
-    if (!checkCommand(m, '?yt')) return;
+    if (!checkCommand(m, 'yt')) return;
 
     var vidList = spliceArguments(m.content)[1];
 
