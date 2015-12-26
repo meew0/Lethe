@@ -74,7 +74,7 @@ client.on('message', m => {
  if (m.content.startsWith(`?ben`)) { // a meme
     if (!checkCommand(m, `?ben`)) return
     var benArray = ["**BEN'S STATUS** \n Lips: LARGE \n Feelings: WHO CARES \n Race: SHADOW-REALM BEAST", "http://puu.sh/m3gGP/de199907f3.png", "http://puu.sh/m3gDD/3c6f7c553b.png", "http://puu.sh/m3gIA/28638cd9ad.jpg", "http://puu.sh/m9tgv/84bc2f4914.jpg", "http://puu.sh/m9tfd/fdd3ad0c46.jpg", "http://puu.sh/m9th3/12a1326552.jpg", "https://cdn.discordapp.com/attachments/93578176231374848/130413901367083008/benkms.jpg" ,"https://cdn.discordapp.com/attachments/93578176231374848/130413948091629568/ben.jpg", "https://puu.sh/ldqI3/7fe79e185e.jpg", "https://puu.sh/ldqI3/7fe79e185e.jpg", "https://puu.sh/ldqC3/563b0df440.jpg"]
-    client.reply(m, benArray[Math.floor(Math.random() * benMemes.length)])
+    client.reply(m, benArray[Math.floor(Math.random() * benArray.length)])
     return;
  }
  if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
