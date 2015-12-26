@@ -80,7 +80,7 @@ client.on('message', m => {
  if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
     if (!checkCommand(m, `?chancey`)) return
     var chanceyArray = ["\n >attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.", "http://puu.sh/lvpn6/2199db5dcd.png"]
-    client.reply(m, chanceyArray[Math.floor(Math.random()*benArray.length)])
+    client.reply(m, chanceyArray[Math.floor(Math.random()*chanceyArray.length)])
     return;
  }
  if (m.content.startsWith(`?nanami`)) { //nanami
