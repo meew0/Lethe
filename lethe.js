@@ -83,8 +83,8 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`${botMention} init`)) { // init
-    if (!checkCommand(m, 'init')) return;
+  if (m.content.startsWith(`?init`)) { // init
+    if (!checkCommand(m, '?init')) return;
     if (boundChannel) return;
     var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
