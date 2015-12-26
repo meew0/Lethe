@@ -97,6 +97,11 @@ if (m.content.startsWith(`?homieroast`)) { //when ya homie gets roasted
   client.reply(m, "https://40.media.tumblr.com/a45905c3728d9e12c0cf75f1068dc1ca/tumblr_noto8ys9Uc1rraq2ko2_1280.jpg")
   return;
 }
+if (m.content.startsWith(`?jimbo`)) { //shadow realm jimbo
+  if (!checkCommand(m, `?jimbo`)) return
+  client.reply(m, "http://puu.sh/m1Ta5/910f1b8e35.png")
+  return;
+}
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
     client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
