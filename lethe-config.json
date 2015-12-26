@@ -4,8 +4,8 @@
   "maxLength": 600,
   "userQueueLimit": -1,
   "checksEnabled": {
-    "checkDuplicateVideo": false,
-    "checkDuplicateUser": false,
+    "checkDuplicateVideo": true,
+    "checkDuplicateUser": true,
     "checkVideoLength": true
   },
   "adminIds": [
@@ -24,13 +24,13 @@
     "yt": false,
     "list": false,
     "list saved": false,
-    "link": false,
-    "next": true,
-    "replay": false,
-    "save": false,
-    "time": false,
-    "yq": false,
-    "pl": true,
-    "shuffle": true
+    "?link": false,
+    "?next": true,
+    "?replay": false,
+    "?save": false,
+    "?time": false,
+    "?yq": false,
+    "?pl": true,
+    "?shuffle": true
   }
 }
