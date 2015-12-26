@@ -102,6 +102,11 @@ if (m.content.startsWith(`?jimbo`)) { //shadow realm jimbo
   client.reply(m, "http://puu.sh/m1Ta5/910f1b8e35.png")
   return;
 }
+if (m.content.startsWith(`?stayfree`)) { //FREE
+  if (!checkCommand(m, `?stayfree`)) return
+  client.reply(m, "http://ecx.images-amazon.com/images/I/81GRxyntAaL._SL1500_.jpg")
+  return;
+}
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
     client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
