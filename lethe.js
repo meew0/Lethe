@@ -129,7 +129,7 @@ if (m.content.startsWith(`?mura`)) { //memecontrol
 if (m.content.startsWith(`?gasthejaps`)) { //memecontrol
   if (!checkCommand(m, `?gasthejaps`)) return
   var gastheJaps = ["https://puu.sh/ksK2R/71306e0b2c.png", "https://puu.sh/ksJPk/378c22cdb3.png"]
-  client.reply(m, gastheJaps[Math.floor(Math.random() * gastheJaps.length)]
+  client.reply(m, gastheJaps[Math.floor(Math.random() * gastheJaps.length)])
   return;
 }
 if (m.content.startsWith(`?chill`)) { //memecontrol
