@@ -79,12 +79,18 @@ client.on('message', m => {
  }
  if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
     if (!checkCommand(m, `?chancey`)) return
-    client.reply(m, "\n >attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.")
+    var chanceyArray = ["\n >attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.", "http://puu.sh/lvpn6/2199db5dcd.png"]
+    client.reply(m, chanceyArray[Math.floor(Math.random()*benArray.length)])
     return;
  }
+ if (m.content.startsWith(`?nanami`)) { //nanami
+  if (!checkCommand(m, `?vanilla`)) return
+  var vanillaArray = ["https://i.gyazo.com/fb6577a3239a86a24fac222e53b1e889.png"]
+  client.reply(m, vanillaArray[0])
+}
  if (m.content.startsWith(`?uni`)) { //uni
     if (!checkCommand(m, `?uni`)) return
-    var uniArray = ["https://puu.sh/lTwMZ/0176bb7075.JPG", "http://puu.sh/lNwLG/47cc9cf362.png"]
+    var uniArray = ["https://puu.sh/lTwMZ/0176bb7075.JPG", "http://puu.sh/lNwLG/47cc9cf362.png", "http://puu.sh/m9whg/187a691bc7.png"]
     client.reply(m, uniArray[Math.floor(Math.random() * uniArray.length)])
     return;
  }
@@ -105,7 +111,7 @@ if (m.content.startsWith(`?stayfree`)) { //FREE
 }
 if (m.content.startsWith(`?dion`)) { //fuckin spooked
   if (!checkCommand(m, `?dion`)) return
-  var dionArray = ["http://puu.sh/m9kCz/81350ea87f.jpg", "http://puu.sh/m9oFW/fda62eb112.png"]
+  var dionArray = ["http://puu.sh/m9kCz/81350ea87f.jpg", "http://puu.sh/m9oFW/fda62eb112.png", "https://i.gyazo.com/8606fb25fb564bd0235f482edb9dc921.png", "https://cdn.discordapp.com/attachments/128148462683422720/130425654255681536/IMG_1515.PNG"]
   client.reply(m, dionArray[Math.floor(Math.random() * dionArray.length)])
   return;
 }
