@@ -131,7 +131,7 @@ client.on('message', m => {
       return;
     }
 
-    var args = spliceArguments(m.content)[1];
+    var args = spliceArguments(m.content)[0];
 
     if (!args) {
       client.reply(m, 'You need to specify a search parameter.');
@@ -175,7 +175,7 @@ client.on('message', m => {
       return;
     }
 
-    var pid = spliceArguments(m.content)[1];
+    var pid = spliceArguments(m.content)[0];
 
     if (!pid) {
       client.reply(m, 'You need to specify a playlist ID!');
@@ -219,7 +219,7 @@ client.on('message', m => {
 
     if (!checkCommand(m, '?yt')) return;
 
-    var vidList = spliceArguments(m.content)[1];
+    var vidList = spliceArguments(m.content)[0];
 
     var vids = vidList.split(',');
     var suppress = 0;
@@ -314,7 +314,7 @@ client.on('message', m => {
 
   if (m.content.startsWith(`?save`)) { // save
     if (!checkCommand(m, '?save')) return;
-    var argument = spliceArguments(m.content)[1];
+    var argument = spliceArguments(m.content)[0];
     if (!argument) {
       client.reply(m, 'You need to specify a video and a keyword!');
       return;
@@ -328,7 +328,7 @@ client.on('message', m => {
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
-      else saveVideo(info, vid, splitArgs[1], m);
+      else saveVideo(info, vid, splitArgs[0], m);
     });
   }
 
