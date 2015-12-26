@@ -10,7 +10,6 @@ var git = require('git-rev');
 git.short(commit => git.branch(branch => {
   console.log(`Lethe#${branch}@${commit}`);
 }));
-
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
 var YoutubeStream = require('./lib/youtube-stream.js');
@@ -79,7 +78,7 @@ client.on('message', m => {
  }
  if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
     if (!checkCommand(m, `?chancey`)) return
-    client.reply(m, ">attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.")
+    client.reply(m, "\n >attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.")
     return;
  }
  if (m.content.startsWith(`?unipicture`)) { //uni
@@ -99,7 +98,7 @@ if (m.content.startsWith(`?homieroast`)) { //when ya homie gets roasted
 }
 if (m.content.startsWith(`?jimbo`)) { //shadow realm jimbo
   if (!checkCommand(m, `?jimbo`)) return
-  client.reply("http://puu.sh/m1Ta5/910f1b8e35.png")
+  client.reply(m, "http://puu.sh/m1Ta5/910f1b8e35.png")
   return;
 }
 if (m.content.startsWith(`?stayfree`)) { //FREE
@@ -107,6 +106,40 @@ if (m.content.startsWith(`?stayfree`)) { //FREE
   client.reply(m, "http://ecx.images-amazon.com/images/I/81GRxyntAaL._SL1500_.jpg")
   return;
 }
+if (m.content.startWith(`?demondion`)) { //fuckin spooked
+  if (!checkCommand(m, `?demondion`)) return
+  client.reply(m, "http://puu.sh/m9kCz/81350ea87f.jpg")
+  return;
+}
+if (m.content.startWith(`?edgydion`)) { // the edge
+  if (!checkCommand(m, `?edgydion`)) return
+  client.reply(m, "http://puu.sh/m9kC8/0d6ff8105a.jpg")
+  return;
+}
+if (m.content.startWith(`?fang`)) { // what a fuckin retard
+  if (!checkCommand(m, `?fang`)) return
+  var fangRotation = Math.floor((Math.random()*100));
+    if (fangRotation < 21){
+      client.reply(m, "http://puu.sh/m2Xfd/bdfa504036.png")
+      return;
+    } else if (fangRotation < 41 && fangRotation > 20){
+      client.reply(m, "http://puu.sh/m2Wew/d1fd328349.png")
+      return;
+    } else if (fangRotation < 61 && fangRotation > 40){
+      client.reply(m, "http://puu.sh/m2VSU/b481f10fe6.png")
+      return;
+    } else if(fangRotation < 81 && fangRotation > 60){
+      client.reply(m, "http://puu.sh/m2VQa/85113beedc.png")
+    } else {
+    client.reply(m, "http://puu.sh/m2VK0/3a47f4daca.png")
+  return;
+}
+}
+/* if (m.content.startWith(``)) { //memecontrol
+  if (!checkCommand(m, ``)) return
+  client.reply(m, "")
+  return;
+} */
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
     client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
