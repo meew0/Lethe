@@ -60,21 +60,30 @@ client.on('message', m => {
   if (!botMention) return;
   if (client.user.id == m.author.id) return;
 
-  if (m.content.startsWith(`${botMention} info`)) {
-    if (!checkCommand(m, 'info')) return;
+  if (m.content.startsWith(`?info`)) {
+    if (!checkCommand(m, '?info')) return;
     git.short(commit => git.branch(branch => {
       client.reply(m, `Version: \`Lethe#${branch}@${commit}\` (cf: ${Config.configRev} cr: ${CURRENT_REV}). Info about Lethe can be found at https://github.com/meew0/Lethe.`);
     }));
     return;
   }
-
-  if (m.content.startsWith(`${botMention} h`)) { // help
-    if (!checkCommand(m, 'help')) return;
-    client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
+ if (m.content.startsWith(`?userID`)) { // userID
+    if (!checkCommand(m, `?userID`)) return;
+    client.reply(m, m.author.id);
+    return;
+ }
+ if (m.content.startsWith(`?benstatus`)) { // a meme
+    if (!checkCommand(m, `?benstatus`)) return
+    client.reply(m, 'Lips: Large; Feelings: Who cares; Race: Nigger')
+    return;
+ }
+  if (m.content.startsWith(`?help`)) { // help
+    if (!checkCommand(m, '?help')) return;
+    client.reply(m, 'Commands - `?info, ?help, ?yt[youtube id], ?yq[search term], ?playlist, ?time, ?next, ?replay, ?list, ?link');
     return;
   }
 
-  if (m.content.startsWith(`${botMention} i`)) { // init
+  if (m.content.startsWith(`${botMention} init`)) { // init
     if (!checkCommand(m, 'init')) return;
     if (boundChannel) return;
     var channelToJoin = spliceArguments(m.content)[1];
@@ -90,7 +99,7 @@ client.on('message', m => {
     }
   }
 
-  if (m.content.startsWith(`${botMention} d`)) { // destroy
+  if (m.content.startsWith(`${botMention} destroy`)) { // destroy
     if (!checkCommand(m, 'destroy')) return;
     if (!boundChannel) return;
     client.reply(m, `Unbinding from <#${boundChannel.id}> and destroying voice connection`);
@@ -105,17 +114,17 @@ client.on('message', m => {
   // Only respond to other messages inside the bound channel
   if (!m.channel.equals(boundChannel)) return;
 
-  if (m.content.startsWith(`${botMention} n`)) { // next
-    if (!checkCommand(m, 'next')) return;
+  if (m.content.startsWith(`?next`)) { // next
+    if (!checkCommand(m, '?next')) return;
     playStopped();
   }
 
-  if (m.content.startsWith(`${botMention} yq`) // youtube query
-    || m.content.startsWith(`${botMention} qq`) // queue query
-    || m.content.startsWith(`${botMention} pq`) // play query
-    || m.content.startsWith(`${botMention} ytq`)) {
+  if (m.content.startsWith(`?yq`) // youtube query
+    || m.content.startsWith(`?qq`) // queue query
+    || m.content.startsWith(`?pq`) // play query
+    || m.content.startsWith(`?ytq`)) {
 
-    if (!checkCommand(m, 'yq')) return;
+    if (!checkCommand(m, '?yq')) return;
 
     if (apiKey == false) {
       client.reply(m, 'Search is disabled (no API KEY found).');
@@ -148,7 +157,7 @@ client.on('message', m => {
           }
         }
 
-        client.reply(m, 'No video has been found!');
+        client.reply(m, 'Sorry, Ebolabot found no videos matching your keywords. Try a different combination of search terms!');
       } else {
         client.reply(m, 'There was an error searching.');
         return;
@@ -158,8 +167,8 @@ client.on('message', m => {
     return; // have to stop propagation
   }
 
-  if (m.content.startsWith(`${botMention} pl`)) { // playlist
-    if (!checkCommand(m, 'pl')) return;
+  if (m.content.startsWith(`?playlist`)) { // playlist
+    if (!checkCommand(m, '?playlist')) return;
 
     if (apiKey == false) {
       client.reply(m, 'Playlist adding is disabled (no API KEY found).');
@@ -204,11 +213,11 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`${botMention} y`) // youtube
-    || m.content.startsWith(`${botMention} q`) // queue
-    || m.content.startsWith(`${botMention} p`)) { // play
+  if (m.content.startsWith(`?y`) // youtube
+    || m.content.startsWith(`?q`) // queue
+    || m.content.startsWith(`?p`)) { // play
 
-    if (!checkCommand(m, 'yt')) return;
+    if (!checkCommand(m, '?yt')) return;
 
     var vidList = spliceArguments(m.content)[1];
 
@@ -221,8 +230,8 @@ client.on('message', m => {
     });
   }
 
-  if (m.content.startsWith(`${botMention} r`)) { // replay
-    if (!checkCommand(m, 'replay')) return;
+  if (m.content.startsWith(`?replay`)) { // replay
+    if (!checkCommand(m, '?replay')) return;
     var videoToPlay = currentVideo ? currentVideo : lastVideo ? lastVideo : false;
     if (!videoToPlay) {
       client.reply(m, 'No video has been played yet!');
@@ -233,8 +242,8 @@ client.on('message', m => {
     client.reply(m, `Queued ${VideoFormat.prettyPrint(currentVideo)}`);
   }
 
-  if (m.content.startsWith(`${botMention} sh`)) { // shuffle
-    if (!checkCommand(m, 'shuffle')) return;
+  if (m.content.startsWith(`?shuffle`)) { // shuffle
+    if (!checkCommand(m, '?shuffle')) return;
     if (playQueue.length < 2) {
       client.reply(m, 'Not enough songs in the queue.');
       return;
@@ -246,14 +255,14 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`${botMention} link`)) {
-    if (!checkCommand(m, 'link')) return;
+  if (m.content.startsWith(`?link`)) {
+    if (!checkCommand(m, '?link')) return;
     if (currentVideo) client.reply(m, `<${currentVideo.loaderUrl}>`);
     return; // stop propagation
   }
 
-  if (m.content.startsWith(`${botMention} list s`)) { // list saved
-    if (!checkCommand(m, 'list saved')) return;
+  if (m.content.startsWith(`?list s`)) { // list saved
+    if (!checkCommand(m, '?list saved')) return;
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
       if (Saved.saved.videos.hasOwnProperty(key)) {
@@ -273,8 +282,8 @@ client.on('message', m => {
     return; // so list doesn't get triggered
   }
 
-  if (m.content.startsWith(`${botMention} l`)) { // list
-    if (!checkCommand(m, 'list')) return;
+  if (m.content.startsWith(`?list`)) { // list
+    if (!checkCommand(m, '?list')) return;
 
     var formattedList = '';
     if (currentVideo) formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
@@ -303,8 +312,8 @@ client.on('message', m => {
     client.reply(m, formattedList);
   }
 
-  if (m.content.startsWith(`${botMention} s`)) { // save
-    if (!checkCommand(m, 'save')) return;
+  if (m.content.startsWith(`?save`)) { // save
+    if (!checkCommand(m, '?save')) return;
     var argument = spliceArguments(m.content)[1];
     if (!argument) {
       client.reply(m, 'You need to specify a video and a keyword!');
@@ -323,8 +332,8 @@ client.on('message', m => {
     });
   }
 
-  if (m.content.startsWith(`${botMention} t`)) { // time
-    if (!checkCommand(m, 'time')) return;
+  if (m.content.startsWith(`?time`)) { // time
+    if (!checkCommand(m, '?time')) return;
     var streamTime = client.internal.voiceConnection.streamTime; // in ms
     var videoTime = currentVideo.length_seconds;
     client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${(streamTime / (videoTime * 10)).toFixed(2)} %)`);
