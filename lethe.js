@@ -71,9 +71,10 @@ client.on('message', m => {
     client.reply(m, m.author.id);
     return;
  }
- if (m.content.startsWith(`?benstatus`)) { // a meme
-    if (!checkCommand(m, `?benstatus`)) return
-    client.reply(m, 'Lips: LARGE \n Feelings: WHO CARES \n Race: SHADOW-REALM BEAST')
+ if (m.content.startsWith(`?ben`)) { // a meme
+    if (!checkCommand(m, `?ben`)) return
+    var benArray = ["**BEN'S STATUS** \n Lips: LARGE \n Feelings: WHO CARES \n Race: SHADOW-REALM BEAST", "http://puu.sh/m3gGP/de199907f3.png", "http://puu.sh/m3gDD/3c6f7c553b.png", "http://puu.sh/m3gIA/28638cd9ad.jpg", "http://puu.sh/m9tgv/84bc2f4914.jpg", "http://puu.sh/m9tfd/fdd3ad0c46.jpg", "http://puu.sh/m9th3/12a1326552.jpg", "https://cdn.discordapp.com/attachments/93578176231374848/130413901367083008/benkms.jpg" ,"https://cdn.discordapp.com/attachments/93578176231374848/130413948091629568/ben.jpg", "https://puu.sh/ldqI3/7fe79e185e.jpg", "https://puu.sh/ldqI3/7fe79e185e.jpg", "https://puu.sh/ldqC3/563b0df440.jpg"]
+    client.reply(m, benArray[Math.floor(Math.random() * benMemes.length)])
     return;
  }
  if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
@@ -81,16 +82,12 @@ client.on('message', m => {
     client.reply(m, "\n >attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.")
     return;
  }
- if (m.content.startsWith(`?unipicture`)) { //uni
-    if (!checkCommand(m, `?unipicture`)) return
-    client.reply(m, "https://puu.sh/lTwMZ/0176bb7075.JPG")
+ if (m.content.startsWith(`?uni`)) { //uni
+    if (!checkCommand(m, `?uni`)) return
+    var uniArray = ["https://puu.sh/lTwMZ/0176bb7075.JPG", "http://puu.sh/lNwLG/47cc9cf362.png"]
+    client.reply(m, uniArray[Math.floor(Math.random() * uniArray.length)])
     return;
  }
-if (m.content.startsWith(`?unitits`)) { //unitits
-  if (!checkCommand(m, `?unitits`)) return
-  client.reply(m, "http://puu.sh/lNwLG/47cc9cf362.png")
-  return;
-}
 if (m.content.startsWith(`?homieroast`)) { //when ya homie gets roasted
   if (!checkCommand(m, `?homieroast`)) return
   client.reply(m, "https://40.media.tumblr.com/a45905c3728d9e12c0cf75f1068dc1ca/tumblr_noto8ys9Uc1rraq2ko2_1280.jpg")
@@ -106,40 +103,91 @@ if (m.content.startsWith(`?stayfree`)) { //FREE
   client.reply(m, "http://ecx.images-amazon.com/images/I/81GRxyntAaL._SL1500_.jpg")
   return;
 }
-if (m.content.startsWith(`?demondion`)) { //fuckin spooked
-  if (!checkCommand(m, `?demondion`)) return
-  client.reply(m, "http://puu.sh/m9kCz/81350ea87f.jpg")
-  return;
-}
-if (m.content.startsWith(`?edgydion`)) { // the edge
-  if (!checkCommand(m, `?edgydion`)) return
-  client.reply(m, "http://puu.sh/m9oFW/fda62eb112.png")
+if (m.content.startsWith(`?dion`)) { //fuckin spooked
+  if (!checkCommand(m, `?dion`)) return
+  var dionArray = ["http://puu.sh/m9kCz/81350ea87f.jpg", "http://puu.sh/m9oFW/fda62eb112.png"]
+  client.reply(m, dionArray[Math.floor(Math.random() * fangRotation.length)])
   return;
 }
 if (m.content.startsWith(`?fang`)) { // what a fuckin retard
   if (!checkCommand(m, `?fang`)) return
-  var fangRotation = Math.floor((Math.random()*100));
-    if (fangRotation < 21){
-      client.reply(m, "http://puu.sh/m2Xfd/bdfa504036.png")
-      return;
-    } else if (fangRotation < 41 && fangRotation > 20){
-      client.reply(m, "http://puu.sh/m2Wew/d1fd328349.png")
-      return;
-    } else if (fangRotation < 61 && fangRotation > 40){
-      client.reply(m, "http://puu.sh/m2VSU/b481f10fe6.png")
-      return;
-    } else if(fangRotation < 81 && fangRotation > 60){
-      client.reply(m, "http://puu.sh/m2VQa/85113beedc.png")
-    } else {
-    client.reply(m, "http://puu.sh/m2VK0/3a47f4daca.png")
+  var fangArray = ["http://puu.sh/m2Xfd/bdfa504036.png", "http://puu.sh/m2Wew/d1fd328349.png", "http://puu.sh/m2VSU/b481f10fe6.png","http://puu.sh/m2VQa/85113beedc.png"]
+  client.reply(m, fangArray[Math.floor(Math.random() * fangArray.length)])
   return;
 }
 }
 /* if (m.content.startsWith(``)) { //memecontrol
   if (!checkCommand(m, ``)) return
   client.reply(m, "")
+  return
+} 
+*/
+if (m.content.startsWith(`?mura`)) { //memecontrol
+  if (!checkCommand(m, `?mura`)) return
+  client.reply(m, "https://i.gyazo.com/21dd51c5175d5ea00d57a15aeb95beb2.png")
   return;
-} */
+}
+if (m.content.startsWith(`?gasthejaps`)) { //memecontrol
+  if (!checkCommand(m, `?gasthejaps`)) return
+  var gastheJaps = ["https://puu.sh/ksK2R/71306e0b2c.png", "https://puu.sh/ksJPk/378c22cdb3.png"]
+  client.reply(m, gastheJaps[Math.floor(Math.random() * gastheJaps.length)]
+  return;
+}
+if (m.content.startsWith(`?chill`)) { //memecontrol
+  if (!checkCommand(m, `?chill`)) return
+  client.reply(m, "https://puu.sh/kt0cd/76e8460d30.png")
+  return
+} 
+if (m.content.startsWith(`?disgusting`)) { //FE disgusting
+  if (!checkCommand(m, `?disgusting`)) return
+  var disgustingArray = ["http://puu.sh/m9urN/727dc202f1.jpg", "http://puu.sh/m9uHU/55e21971c4.png", "http://puu.sh/m9usJ/42f703711b.jpg", "http://puu.sh/m9uKU/8e234f5886.png"]
+  client.reply(m, disgustingArray[Math.floor(Math.random() * disgustingArray.length)])
+  return
+} 
+if (m.content.startsWith(`?murder`)) { //FE murder
+  if (!checkCommand(m, `?murder`)) return
+  var murderArray = ["http://puu.sh/m9uEl/c078d7d7e3.jpg", "http://puu.sh/m9uDB/66606e1c4d.png", "http://puu.sh/m9uFf/5c50e06e88.png", "http://puu.sh/m9uCe/e950f095af.png"]
+  client.reply(m, murderArray[Math.floor(Math.random() * murderArray.length)])
+  return
+} 
+if (m.content.startsWith(`?clearlyaruse`)) { //embarassing...
+  if (!checkCommand(m, `?clearlyaruse`)) return
+  var ruseArray = ["http://puu.sh/m9upL/d08c7cae41.jpg", "http://puu.sh/m9uuY/c73bdb1d8c.jpg", "http://puu.sh/m9uJx/88d050f6fd.png"]
+  client.reply(m, ruseArray[Math.floor(Math.random()*ruseArray.length)])
+  return
+} 
+if (m.content.startsWith(`?stiff`)) { //stiffies and panties
+  if (!checkCommand(m, `?stiff`)) return
+  var stiffArray = ["http://puu.sh/m9vhb/e8eb27f5e8.png", "http://puu.sh/m9unQ/5e94a9615e.jpg"]
+  client.reply(m, stiffArray[Math.floor(Math.random()*stiffArray.length)])
+  return
+} 
+if (m.content.startsWith(`?sadness`)) { //memecontrol
+  if (!checkCommand(m, `?sadness`)) return
+  var sadArray = ["http://puu.sh/m9up0/97a92a25ae.png", "http://puu.sh/m9uua/882e72756e.png"]
+  client.reply(m, [Math.floor(Math.random()*sadArray.length)])
+  return
+} 
+if (m.content.startsWith(`?peace`)) { //PEACE
+  if (!checkCommand(m, `?peace`)) return
+  client.reply(m, "http://puu.sh/m9uG8/de8d3f9f9e.png")
+  return
+} 
+if (m.content.startsWith(`?friends`)) { //PEACE
+  if (!checkCommand(m, `?friends`)) return
+  client.reply(m, "http://puu.sh/m9ux9/c2b3d3bfda.png")
+  return
+} 
+if (m.content.startsWith(`?shock`)) { //PEACE
+  if (!checkCommand(m, `?shock`)) return
+  client.reply(m, "http://puu.sh/m9uBc/f5f18e509c.png")
+  return
+} 
+if (m.content.startsWith(`?goodgirls`)){ //goodgrils
+  if (!checkCommand(m, `?goodgirls`)) return
+  client.reply(m, "http://puu.sh/m2X9z/d979127608.png")
+  return
+}
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
     client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
