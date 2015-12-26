@@ -106,7 +106,7 @@ if (m.content.startsWith(`?stayfree`)) { //FREE
 if (m.content.startsWith(`?dion`)) { //fuckin spooked
   if (!checkCommand(m, `?dion`)) return
   var dionArray = ["http://puu.sh/m9kCz/81350ea87f.jpg", "http://puu.sh/m9oFW/fda62eb112.png"]
-  client.reply(m, dionArray[Math.floor(Math.random() * fangRotation.length)])
+  client.reply(m, dionArray[Math.floor(Math.random() * dionArray.length)])
   return;
 }
 if (m.content.startsWith(`?fang`)) { // what a fuckin retard
