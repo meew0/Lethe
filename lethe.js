@@ -79,7 +79,7 @@ client.on('message', m => {
  }
   if (m.content.startsWith(`?help`)) { // help
     if (!checkCommand(m, '?help')) return;
-    client.reply(m, 'Commands - `?info, ?help, ?yt[youtube id], ?yq[search term], ?playlist, ?time, ?next, ?replay, ?list, ?link');
+    client.reply(m, 'Commands - `?info, ?help, ?yt[youtube id], ?yq[search term], ?playlist, ?time, ?next, ?replay, ?list, ?link.`');
     return;
   }
 
