@@ -113,7 +113,7 @@ if (m.content.startsWith(`?demondion`)) { //fuckin spooked
 }
 if (m.content.startsWith(`?edgydion`)) { // the edge
   if (!checkCommand(m, `?edgydion`)) return
-  client.reply(m, "http://puu.sh/m9kC8/0d6ff8105a.jpg")
+  client.reply(m, "http://puu.sh/m9oFW/fda62eb112.png")
   return;
 }
 if (m.content.startsWith(`?fang`)) { // what a fuckin retard
