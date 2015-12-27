@@ -129,7 +129,11 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} n`)) { // next
     if (!checkCommand(m, 'next')) return;
-    playStopped();
+    if (currentVideo) {
+      playStopped();
+    } else {
+      client.reply(m, 'No video is currently playing.');
+    }
   }
 
   if (m.content.startsWith(`${botMention} yq`) // youtube query
