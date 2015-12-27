@@ -1,11 +1,11 @@
 var Discord = require('discord.js');
 
-var ytdl = require('ytdl-core');
-var request = require('superagent');
-var url = require('url');
+ //var ytdl = require('ytdl-core');
+//var request = require('superagent');
+//var url = require('url');
 
 // Output version information in console
-var git = require('git-rev');
+//var git = require('git-rev');
 
 git.short(commit => git.branch(branch => {
   console.log(`Lethe#${branch}@${commit}`);
