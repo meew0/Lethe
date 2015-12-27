@@ -20,7 +20,7 @@ var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
 
 var client = new Discord.Client();
-client.setStatus(online, game, callback)
+client.setStatus("online","your mother!")
 /* // Handle discord.js warnings
 client.on('warn', (m) => console.log('[warn]', m));
 client.on('debug', (m) => console.log('[debug]', m));
