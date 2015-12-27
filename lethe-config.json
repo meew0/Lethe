@@ -1,15 +1,21 @@
 {
   "configRev": 2,
   "timeOffset": 8000,
-  "maxLength": -1,
-  "userQueueLimit": -1,
+  "maxLength": 600,
+  "userQueueLimit": 2,
   "checksEnabled": {
-    "checkDuplicateVideo": false,
-    "checkDuplicateUser": false,
-    "checkVideoLength": false
+    "checkDuplicateVideo": true,
+    "checkDuplicateUser": true,
+    "checkVideoLength": true
   },
   "adminIds": [
-    "66237334693085184"
+    "81526338728501248",
+    "93800674139054080",
+    "81633420542742528",
+    "81635977314963456",
+    "92798750765903872",
+    "93542212708605952",
+    "81526336757174272"
   ],
   "commandsRestrictedToAdmins": {
     "init": true,
@@ -19,13 +25,13 @@
     "yt": false,
     "list": false,
     "list saved": false,
-    "link": false,
-    "next": true,
-    "replay": false,
-    "save": false,
-    "time": false,
-    "yq": false,
-    "pl": false,
-    "shuffle": true
+    "?link": false,
+    "?next": true,
+    "?replay": false,
+    "?save": false,
+    "?time": false,
+    "?yq": false,
+    "?pl": true,
+    "?shuffle": true
   }
 }

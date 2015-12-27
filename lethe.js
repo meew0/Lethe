@@ -1,4 +1,4 @@
-var Discord = require('discord.js');
+/* var Discord = require('discord.js');
 
 var ytdl = require('ytdl-core');
 var request = require('superagent');
@@ -10,7 +10,6 @@ var git = require('git-rev');
 git.short(commit => git.branch(branch => {
   console.log(`Lethe#${branch}@${commit}`);
 }));
-
 var shouldDisallowQueue = require('./lib/permission-checks.js');
 var VideoFormat = require('./lib/video-format.js');
 var YoutubeStream = require('./lib/youtube-stream.js');
@@ -19,7 +18,7 @@ Saved.read();
 
 var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
-
+*/
 var client = new Discord.Client();
 
 // Handle discord.js warnings
@@ -60,22 +59,154 @@ client.on('message', m => {
   if (!botMention) return;
   if (client.user.id == m.author.id) return;
 
-  if (m.content.startsWith(`${botMention} info`)) {
-    if (!checkCommand(m, 'info')) return;
+  if (m.content.startsWith(`?info`)) {
+    if (!checkCommand(m, '?info')) return;
     git.short(commit => git.branch(branch => {
       client.reply(m, `Version: \`Lethe#${branch}@${commit}\` (cf: ${Config.configRev} cr: ${CURRENT_REV}). Info about Lethe can be found at https://github.com/meew0/Lethe.`);
     }));
     return;
   }
-
-  if (m.content.startsWith(`${botMention} h`)) { // help
-    if (!checkCommand(m, 'help')) return;
-    client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
+ if (m.content.startsWith(`?userID`)) { // userID
+    if (!checkCommand(m, `?userID`)) return;
+    client.reply(m, m.author.id);
+    return;
+ }
+ if (m.content.startsWith(`?ben`)) { // a meme
+    if (!checkCommand(m, `?ben`)) return
+    var benArray = ["**BEN'S STATUS** \n Lips: LARGE \n Feelings: WHO CARES \n Race: SHADOW-REALM BEAST", "http://puu.sh/m3gGP/de199907f3.png", "http://puu.sh/m3gDD/3c6f7c553b.png", "http://puu.sh/m3gIA/28638cd9ad.jpg", "http://puu.sh/m9tgv/84bc2f4914.jpg", "http://puu.sh/m9tfd/fdd3ad0c46.jpg", "http://puu.sh/m9th3/12a1326552.jpg", "https://cdn.discordapp.com/attachments/93578176231374848/130413901367083008/benkms.jpg" ,"https://cdn.discordapp.com/attachments/93578176231374848/130413948091629568/ben.jpg", "https://puu.sh/ldqI3/7fe79e185e.jpg", "https://puu.sh/ldqI3/7fe79e185e.jpg", "https://puu.sh/ldqC3/563b0df440.jpg", "http://puu.sh/lvryP/a7aeb5c7f2.jpg", "http://puu.sh/l0dy0/97c6792172.jpg"]
+    client.reply(m, benArray[Math.floor(Math.random() * benArray.length)])
+    return;
+ }
+ if (m.content.startsWith(`?chancey`)) { // chancey telling off darrell
+    if (!checkCommand(m, `?chancey`)) return
+    var chanceyArray = ["\n >attacking \n I was telling you how is it when you legit tell me to \"promise\" you to text first. \n I was implying that I cannot guarantee shit like this because it rarely happens, even if someone were to complain. \n Attack sounds like this: \n You sound like you're triggered. Where's your problem glasses? Oh wait. You're a nigger! You're just gonna complain that everything bad that happens to you is because you're black. Are you ready to get cucked by your master? Or perhaps you'd rather fuck gorillas aka your own people.", "http://puu.sh/lvpn6/2199db5dcd.png"]
+    client.reply(m, chanceyArray[Math.floor(Math.random()*chanceyArray.length)])
+    return;
+ }
+ if (m.content.startsWith(`?nanami`)) { //nanami
+  if (!checkCommand(m, `?vanilla`)) return
+  var vanillaArray = ["https://i.gyazo.com/fb6577a3239a86a24fac222e53b1e889.png"]
+  client.reply(m, vanillaArray[0])
+}
+ if (m.content.startsWith(`?uni`)) { //uni
+    if (!checkCommand(m, `?uni`)) return
+    var uniArray = ["https://puu.sh/lTwMZ/0176bb7075.JPG", "http://puu.sh/lNwLG/47cc9cf362.png", "http://puu.sh/m9whg/187a691bc7.png"]
+    client.reply(m, uniArray[Math.floor(Math.random() * uniArray.length)])
+    return;
+ }
+if (m.content.startsWith(`?homieroast`)) { //when ya homie gets roasted
+  if (!checkCommand(m, `?homieroast`)) return
+  client.reply(m, "https://40.media.tumblr.com/a45905c3728d9e12c0cf75f1068dc1ca/tumblr_noto8ys9Uc1rraq2ko2_1280.jpg")
+  return;
+}
+if (m.content.startsWith(`?jimbo`)) { //shadow realm jimbo
+  if (!checkCommand(m, `?jimbo`)) return
+  client.reply(m, "http://puu.sh/m1Ta5/910f1b8e35.png")
+  return;
+}
+if (m.content.startsWith(`?stayfree`)) { //FREE
+  if (!checkCommand(m, `?stayfree`)) return
+  client.reply(m, "http://ecx.images-amazon.com/images/I/81GRxyntAaL._SL1500_.jpg")
+  return;
+}
+if (m.content.startsWith(`?dion`)) { //fuckin spooked
+  if (!checkCommand(m, `?dion`)) return
+  var dionArray = ["http://puu.sh/m9kCz/81350ea87f.jpg", "http://puu.sh/m9oFW/fda62eb112.png", "https://i.gyazo.com/8606fb25fb564bd0235f482edb9dc921.png", "https://cdn.discordapp.com/attachments/128148462683422720/130425654255681536/IMG_1515.PNG", "http://puu.sh/lzAgv/55c4276d7c.png"]
+  client.reply(m, dionArray[Math.floor(Math.random() * dionArray.length)])
+  return;
+}
+if (m.content.startsWith(`?fang`)) { // what a fuckin retard
+  if (!checkCommand(m, `?fang`)) return
+  var fangArray = ["http://puu.sh/m2Xfd/bdfa504036.png", "http://puu.sh/m2Wew/d1fd328349.png", "http://puu.sh/m2VSU/b481f10fe6.png","http://puu.sh/m2VQa/85113beedc.png"]
+  client.reply(m, fangArray[Math.floor(Math.random() * fangArray.length)])
+  return;
+}
+if (m.content.startsWith(`?starterpack`)) { //memecontrol
+  if (!checkCommand(m, `?pack`)) return
+  var starterpackArray = ["https://puu.sh/l4EIB/6e34ebbe36.jpg", "https://puu.sh/l4EAy/ecd052884e.jpg", "https://puu.sh/l4EtZ/a4f6819dfe.jpg", "https://puu.sh/l4Em3/e065f1a648.jpg", "https://puu.sh/l4EiX/4058337b49.jpg", "https://puu.sh/l4E38/787f1d7295.jpg", "https://puu.sh/l4E1q/a5c291f274.jpg", "http://cdn2.gurl.com/wp-content/uploads/2014/11/real-music-starter-pack.jpg", "http://socawlege.com/wp-content/uploads/2015/05/14.png", "http://socawlege.com/wp-content/uploads/2015/05/7.png", "http://cdn3.gurl.com/wp-content/uploads/2014/11/tumblr-white-girl-starter-pack.jpg", "https://puu.sh/m9PKe/fe80e20b66.png", "http://puu.sh/m9POD/7627d3cc78.png", "https://i.imgur.com/r3kOR9J.png", "http://puu.sh/m9PQ0/1a26c2f439.png", "http://orig10.deviantart.net/ae07/f/2015/169/0/c/the_i_hate_capitalism_starter_pack_by_billwilsoncia-d8xuw2b.png", "http://puu.sh/m9PR1/eeac97339a.png", "http://puu.sh/m9PRF/9946c618e1.png", "http://puu.sh/m9PSl/0dbfa24b47.png", "http://cdn.hiphopwired.com/wp-content/uploads/2014/11/starter-pack-2.png", "http://puu.sh/m9PTb/b73f4677d5.png", "http://puu.sh/m9PTX/2762d24475.png", "http://socawlege.com/wp-content/uploads/2014/12/kush.jpg", "https://i.imgur.com/lCWov56.jpg", "https://i.imgur.com/BfUDdnl.png", "http://cdn.hiphopwired.com/wp-content/uploads/2014/11/starter-pack-1.png", "http://www.starter-packs.com/wp-content/uploads/2014/12/home-alone.jpg", "http://cdn3.gurl.com/wp-content/uploads/2014/11/college-student-starter-pack.jpg", "https://i.imgur.com/M0oP8m4.jpg", "http://puu.sh/m9PZd/a0b5745764.png", "https://i.imgur.com/pDehVAX.jpg", "http://puu.sh/m9PZP/dc11be8fd2.png"];
+  client.reply(m, starterpackArray[Math.floor(Math.random() * starterpackArray.length)])
+  return;
+} 
+/* if (m.content.startsWith(``)) { //memecontrol
+  if (!checkCommand(m, ``)) return
+  client.reply(m, "")
+  return
+} 
+*/
+if (m.content.startsWith(`?mura`)) { //memecontrol
+  if (!checkCommand(m, `?mura`)) return
+  client.reply(m, "https://i.gyazo.com/21dd51c5175d5ea00d57a15aeb95beb2.png")
+  return;
+}
+if (m.content.startsWith(`?gasthejaps`)) { //memecontrol
+  if (!checkCommand(m, `?gasthejaps`)) return
+  var gastheJaps = ["https://puu.sh/ksK2R/71306e0b2c.png", "https://puu.sh/ksJPk/378c22cdb3.png"]
+  client.reply(m, gastheJaps[Math.floor(Math.random() * gastheJaps.length)])
+  return;
+}
+if (m.content.startsWith(`?chill`)) { //memecontrol
+  if (!checkCommand(m, `?chill`)) return
+  client.reply(m, "https://puu.sh/kt0cd/76e8460d30.png")
+  return
+} 
+if (m.content.startsWith(`?disgusting`)) { //FE disgusting
+  if (!checkCommand(m, `?disgusting`)) return
+  var disgustingArray = ["http://puu.sh/m9urN/727dc202f1.jpg", "http://puu.sh/m9uHU/55e21971c4.png", "http://puu.sh/m9usJ/42f703711b.jpg", "http://puu.sh/m9uKU/8e234f5886.png"]
+  client.reply(m, disgustingArray[Math.floor(Math.random() * disgustingArray.length)])
+  return
+} 
+if (m.content.startsWith(`?murder`)) { //FE murder
+  if (!checkCommand(m, `?murder`)) return
+  var murderArray = ["http://puu.sh/m9uEl/c078d7d7e3.jpg", "http://puu.sh/m9uDB/66606e1c4d.png", "http://puu.sh/m9uFf/5c50e06e88.png", "http://puu.sh/m9uCe/e950f095af.png"]
+  client.reply(m, murderArray[Math.floor(Math.random() * murderArray.length)])
+  return
+} 
+if (m.content.startsWith(`?clearlyaruse`)) { //embarassing...
+  if (!checkCommand(m, `?clearlyaruse`)) return
+  var ruseArray = ["http://puu.sh/m9upL/d08c7cae41.jpg", "http://puu.sh/m9uuY/c73bdb1d8c.jpg", "http://puu.sh/m9uJx/88d050f6fd.png"]
+  client.reply(m, ruseArray[Math.floor(Math.random()*ruseArray.length)])
+  return
+} 
+if (m.content.startsWith(`?stiff`)) { //stiffies and panties
+  if (!checkCommand(m, `?stiff`)) return
+  var stiffArray = ["http://puu.sh/m9vhb/e8eb27f5e8.png", "http://puu.sh/m9unQ/5e94a9615e.jpg"]
+  client.reply(m, stiffArray[Math.floor(Math.random()*stiffArray.length)])
+  return
+} 
+if (m.content.startsWith(`?sadness`)) { //memecontrol
+  if (!checkCommand(m, `?sadness`)) return
+  var sadArray = ["http://puu.sh/m9up0/97a92a25ae.png", "http://puu.sh/m9uua/882e72756e.png"]
+  client.reply(m, [Math.floor(Math.random()*sadArray.length)])
+  return
+} 
+if (m.content.startsWith(`?peace`)) { //PEACE
+  if (!checkCommand(m, `?peace`)) return
+  client.reply(m, "http://puu.sh/m9uG8/de8d3f9f9e.png")
+  return
+} 
+if (m.content.startsWith(`?friends`)) { //PEACE
+  if (!checkCommand(m, `?friends`)) return
+  client.reply(m, "http://puu.sh/m9ux9/c2b3d3bfda.png")
+  return
+} 
+if (m.content.startsWith(`?shock`)) { //PEACE
+  if (!checkCommand(m, `?shock`)) return
+  client.reply(m, "http://puu.sh/m9uBc/f5f18e509c.png")
+  return
+} 
+if (m.content.startsWith(`?goodgirls`)){ //goodgrils
+  if (!checkCommand(m, `?goodgirls`)) return
+  client.reply(m, "http://puu.sh/m2X9z/d979127608.png")
+  return
+}
+  if (m.content.startsWith(`?help`)) { // help
+    if (!checkCommand(m, '?help')) return;
+    client.reply(m, 'Commands - `?info, ?help, @(Botname) yt[youtube id], @(Botname) yq[search term], @(Botname) playlist, ?time, ?next, ?replay, ?list, ?link.(all video playing options require you to ping the bot)`');
     return;
   }
 
-  if (m.content.startsWith(`${botMention} i`)) { // init
-    if (!checkCommand(m, 'init')) return;
+  if (m.content.startsWith(`?init`)) { // init
+    if (!checkCommand(m, '?init')) return;
     if (boundChannel) return;
     var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
@@ -90,7 +221,7 @@ client.on('message', m => {
     }
   }
 
-  if (m.content.startsWith(`${botMention} d`)) { // destroy
+  if (m.content.startsWith(`${botMention} destroy`)) { // destroy
     if (!checkCommand(m, 'destroy')) return;
     if (!boundChannel) return;
     client.reply(m, `Unbinding from <#${boundChannel.id}> and destroying voice connection`);
@@ -105,8 +236,8 @@ client.on('message', m => {
   // Only respond to other messages inside the bound channel
   if (!m.channel.equals(boundChannel)) return;
 
-  if (m.content.startsWith(`${botMention} n`)) { // next
-    if (!checkCommand(m, 'next')) return;
+  if (m.content.startsWith(`?next`)) { // next
+    if (!checkCommand(m, '?next')) return;
     playStopped();
   }
 
@@ -148,9 +279,9 @@ client.on('message', m => {
           }
         }
 
-        client.reply(m, 'No video has been found!');
+        client.reply(m, 'Sorry, not even Ebola-chan could find videos matching your keywords. Try a different combination of search terms!');
       } else {
-        client.reply(m, 'There was an error searching.');
+        client.reply(m, "....Something went wrong?");
         return;
       }
     });
@@ -158,8 +289,8 @@ client.on('message', m => {
     return; // have to stop propagation
   }
 
-  if (m.content.startsWith(`${botMention} pl`)) { // playlist
-    if (!checkCommand(m, 'pl')) return;
+  if (m.content.startsWith(`?playlist`)) { // playlist
+    if (!checkCommand(m, '?playlist')) return;
 
     if (apiKey == false) {
       client.reply(m, 'Playlist adding is disabled (no API KEY found).');
@@ -221,8 +352,8 @@ client.on('message', m => {
     });
   }
 
-  if (m.content.startsWith(`${botMention} r`)) { // replay
-    if (!checkCommand(m, 'replay')) return;
+  if (m.content.startsWith(`?replay`)) { // replay
+    if (!checkCommand(m, '?replay')) return;
     var videoToPlay = currentVideo ? currentVideo : lastVideo ? lastVideo : false;
     if (!videoToPlay) {
       client.reply(m, 'No video has been played yet!');
@@ -233,8 +364,8 @@ client.on('message', m => {
     client.reply(m, `Queued ${VideoFormat.prettyPrint(currentVideo)}`);
   }
 
-  if (m.content.startsWith(`${botMention} sh`)) { // shuffle
-    if (!checkCommand(m, 'shuffle')) return;
+  if (m.content.startsWith(`?shuffle`)) { // shuffle
+    if (!checkCommand(m, '?shuffle')) return;
     if (playQueue.length < 2) {
       client.reply(m, 'Not enough songs in the queue.');
       return;
@@ -246,14 +377,14 @@ client.on('message', m => {
     return;
   }
 
-  if (m.content.startsWith(`${botMention} link`)) {
-    if (!checkCommand(m, 'link')) return;
+  if (m.content.startsWith(`?link`)) {
+    if (!checkCommand(m, '?link')) return;
     if (currentVideo) client.reply(m, `<${currentVideo.loaderUrl}>`);
     return; // stop propagation
   }
 
-  if (m.content.startsWith(`${botMention} list s`)) { // list saved
-    if (!checkCommand(m, 'list saved')) return;
+  if (m.content.startsWith(`?list s`)) { // list saved
+    if (!checkCommand(m, '?list saved')) return;
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
       if (Saved.saved.videos.hasOwnProperty(key)) {
@@ -273,8 +404,8 @@ client.on('message', m => {
     return; // so list doesn't get triggered
   }
 
-  if (m.content.startsWith(`${botMention} l`)) { // list
-    if (!checkCommand(m, 'list')) return;
+  if (m.content.startsWith(`?list`)) { // list
+    if (!checkCommand(m, '?list')) return;
 
     var formattedList = '';
     if (currentVideo) formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
@@ -303,7 +434,7 @@ client.on('message', m => {
     client.reply(m, formattedList);
   }
 
-  if (m.content.startsWith(`${botMention} s`)) { // save
+  if (m.content.startsWith(`?save`)) { // save
     if (!checkCommand(m, 'save')) return;
     var argument = spliceArguments(m.content)[1];
     if (!argument) {
@@ -319,12 +450,12 @@ client.on('message', m => {
     var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
     ytdl.getInfo(requestUrl, (err, info) => {
       if (err) handleYTError(err);
-      else saveVideo(info, vid, splitArgs[1], m);
+      else saveVideo(info, vid, splitArgs[0], m);
     });
   }
 
-  if (m.content.startsWith(`${botMention} t`)) { // time
-    if (!checkCommand(m, 'time')) return;
+  if (m.content.startsWith(`?time`)) { // time
+    if (!checkCommand(m, '?time')) return;
     var streamTime = client.internal.voiceConnection.streamTime; // in ms
     var videoTime = currentVideo.length_seconds;
     client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${(streamTime / (videoTime * 10)).toFixed(2)} %)`);
