@@ -1,4 +1,4 @@
-var Discord = require('discord.js');
+/* var Discord = require('discord.js');
 
 var ytdl = require('ytdl-core');
 var request = require('superagent');
@@ -18,7 +18,7 @@ Saved.read();
 
 var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
-
+*/
 var client = new Discord.Client();
 
 // Handle discord.js warnings
