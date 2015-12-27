@@ -17,6 +17,7 @@ Saved.read();
 
 var YoutubeTrack = require('./lib/youtube-track.js');
 
+var Util = require('./lib/util.js');
 var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
 
@@ -230,7 +231,7 @@ client.on('message', m => {
     }
 
     playQueue.push(videoToPlay);
-    client.reply(m, `Queued ${VideoFormat.prettyPrint(currentVideo)}`);
+    client.reply(m, `Queued ${currentVideo.prettyPrint()}`);
   }
 
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
@@ -257,7 +258,7 @@ client.on('message', m => {
     var formattedList = 'Here are the videos currently saved: \n';
     for (var key in Saved.saved.videos) {
       if (Saved.saved.videos.hasOwnProperty(key)) {
-        formattedList += `*${key}*: ${VideoFormat.prettyPrint(Saved.saved.videos[key])}\n`;
+        formattedList += `*${key}*: ${Saved.saved.videos[key].prettyPrint()}\n`;
       }
     }
 
@@ -277,7 +278,7 @@ client.on('message', m => {
     if (!checkCommand(m, 'list')) return;
 
     var formattedList = '';
-    if (currentVideo) formattedList += `Currently playing: ${VideoFormat.prettyPrintWithUser(currentVideo)}\n`;
+    if (currentVideo) formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
 
     if (playQueue.length == 0) {
       formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
@@ -289,7 +290,7 @@ client.on('message', m => {
       playQueue.forEach((video, idx) => {
         if (shouldBreak) return;
 
-        var formattedVideo = `${idx + 1}. ${VideoFormat.prettyPrintWithUser(video)}\n`;
+        var formattedVideo = `${idx + 1}. ${currentVideo.fullPrint()}\n`;
 
         if ((formattedList.length + formattedVideo.length) > 1950) {
           formattedList += `... and ${playQueue.length - idx} more`;
@@ -326,8 +327,9 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} t`)) { // time
     if (!checkCommand(m, 'time')) return;
     var streamTime = client.internal.voiceConnection.streamTime; // in ms
-    var videoTime = currentVideo.length_seconds;
-    client.reply(m, `${VideoFormat.prettyTime(streamTime)} / ${VideoFormat.prettyTime(videoTime * 1000)} (${(streamTime / (videoTime * 10)).toFixed(2)} %)`);
+    var streamSeconds = streamTime / 1000;
+    var videoTime = currentVideo.lengthSeconds;
+    client.reply(m, `${Util.prettyTime(streamSeconds)} / ${Util.prettyTime(videoTime)} (${((streamSeconds * 100) / videoTime).toFixed(2)} %)`);
   }
 });
 
@@ -373,14 +375,14 @@ function spliceArguments(message, after) {
 }
 
 function saveVideo(video, vid, keywords, m) {
-  simplified = VideoFormat.simplify(video, vid);
-  if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${VideoFormat.simplePrint(Saved.saved.videos[keywords])} is already saved as *${keywords}*! Overwriting.`);
+  simplified = video.saveable();
+  if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${Saved.saved.videos[keywords].prettyPrint()} is already saved as *${keywords}*! Overwriting.`);
 
   var key;
   if (key = Saved.isVideoSaved(vid)) client.reply(m, `Warning: This video is already saved as *${key}*! Adding it anyway as *${keywords}*.`);
 
   Saved.saved.videos[keywords] = simplified;
-  client.reply(m, `Saved video ${VideoFormat.prettyPrint(video)} as *${keywords}*`);
+  client.reply(m, `Saved video ${video.prettyPrint()} as *${keywords}*`);
   Saved.write();
 }
 
