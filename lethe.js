@@ -240,7 +240,7 @@ client.on('message', m => {
       client.reply(m, 'Not enough songs in the queue.');
       return;
     } else {
-      shuffle(playQueue);
+      Util.shuffle(playQueue);
       client.reply(m, 'Songs in the queue have been shuffled.');
     }
 
@@ -263,7 +263,7 @@ client.on('message', m => {
     }
 
     if (formattedList.length >= 2000) {
-      haste(formattedList, (key) => {
+      Util.haste(formattedList, (key) => {
         if (!key) {
           client.reply(m, 'There was an error while retrieving the list of saved videos! Sorry :(');
         }
@@ -467,41 +467,12 @@ function nextInQueue() {
   }
 }
 
-function shuffle(array) {
-  var counter = array.length;
-  var temp;
-  var index;
-
-  // While there are elements in the array
-  while (counter > 0) {
-    index = Math.floor(Math.random() * counter);
-
-    counter--;
-
-    temp = array[counter];
-    array[counter] = array[index];
-    array[index] = temp;
-  }
-
-  return array;
-}
-
 function fancyReply(m, message) {
   if (shouldStockpile) {
     stockpile += message + '\n';
   } else {
     client.reply(m, message);
   }
-}
-
-function haste(data, cb) {
-  request.post('http://hastebin.com/documents').send(data).end((error, result) => {
-    if (error) {
-      cb(false);
-    } else {
-      cb(result.body.key);
-    }
-  });
 }
 
 function spitUp(m) {
