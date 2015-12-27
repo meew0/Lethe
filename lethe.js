@@ -1,13 +1,13 @@
 var Discord = require('discord.js');
 
- //var ytdl = require('ytdl-core');
-//var request = require('superagent');
-//var url = require('url');
+var ytdl = require('ytdl-core');
+var request = require('superagent');
+var url = require('url');
 
 // Output version information in console
-//var git = require('git-rev');
+var git = require('git-rev');
 
-/*git.short(commit => git.branch(branch => {
+git.short(commit => git.branch(branch => {
   console.log(`Lethe#${branch}@${commit}`);
 }));
 var shouldDisallowQueue = require('./lib/permission-checks.js');
@@ -18,10 +18,10 @@ Saved.read();
 
 var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
-*/
+
 var client = new Discord.Client();
-client.setStatus("online","your mother!")
-/* // Handle discord.js warnings
+
+// Handle discord.js warnings
 client.on('warn', (m) => console.log('[warn]', m));
 client.on('debug', (m) => console.log('[debug]', m));
 
@@ -126,7 +126,7 @@ if (m.content.startsWith(`?fang`)) { // what a fuckin retard
   client.reply(m, "")
   return
 } 
-
+*/
 if (m.content.startsWith(`?mura`)) { //memecontrol
   if (!checkCommand(m, `?mura`)) return
   client.reply(m, "https://i.gyazo.com/21dd51c5175d5ea00d57a15aeb95beb2.png")
@@ -641,5 +641,4 @@ function error(argument) {
 }
 
 // Email and password over command line
-*/
 client.login(process.argv[2], process.argv[3]).catch((e) => console.log(e));
