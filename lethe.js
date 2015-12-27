@@ -231,7 +231,7 @@ client.on('message', m => {
     }
 
     playQueue.push(videoToPlay);
-    client.reply(m, `Queued ${currentVideo.prettyPrint()}`);
+    client.reply(m, `Queued ${videoToPlay.prettyPrint()}`);
   }
 
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
@@ -317,8 +317,7 @@ client.on('message', m => {
     var vid = splitArgs[0];
     vid = resolveVid(vid, m);
 
-    var requestUrl = 'http://www.youtube.com/watch?v=' + vid;
-    ytdl.getInfo(requestUrl, (err, info) => {
+    YoutubeTrack.getInfoFromVid(vid, m, (err, info) => {
       if (err) handleYTError(err);
       else saveVideo(info, vid, splitArgs[1], m);
     });
@@ -375,6 +374,7 @@ function spliceArguments(message, after) {
 }
 
 function saveVideo(video, vid, keywords, m) {
+  console.log(video);
   simplified = video.saveable();
   if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${Saved.saved.videos[keywords].prettyPrint()} is already saved as *${keywords}*! Overwriting.`);
 
