@@ -2,7 +2,7 @@
   "configRev": 2,
   "timeOffset": 8000,
   "maxLength": 600,
-  "userQueueLimit": 3,
+  "userQueueLimit": 2,
   "checksEnabled": {
     "checkDuplicateVideo": true,
     "checkDuplicateUser": true,
