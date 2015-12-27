@@ -7,7 +7,7 @@ var Discord = require('discord.js');
 // Output version information in console
 //var git = require('git-rev');
 
-git.short(commit => git.branch(branch => {
+/*git.short(commit => git.branch(branch => {
   console.log(`Lethe#${branch}@${commit}`);
 }));
 var shouldDisallowQueue = require('./lib/permission-checks.js');
@@ -18,7 +18,7 @@ Saved.read();
 
 var Config = require('./lib/config.js');
 var CURRENT_REV = 2;
-
+*/
 var client = new Discord.Client();
 client.setStatus("online","your mother!")
 /* // Handle discord.js warnings
