@@ -249,7 +249,7 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} link`)) {
     if (!checkCommand(m, 'link')) return;
-    if (currentVideo) client.reply(m, `<${currentVideo.loaderUrl}>`);
+    if (currentVideo) client.reply(m, `<https://youtu.be/${currentVideo.vid}>`);
     return; // stop propagation
   }
 
