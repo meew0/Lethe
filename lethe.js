@@ -454,7 +454,7 @@ function userIsAdmin(userId) {
 function checkCommand(m, command) {
   if (Config.commandsRestrictedToAdmins[command]) {
     if (!userIsAdmin(m.author.id)) {
-      client.reply(m, `You don't have permission to execute that command!`);
+      client.reply(m, `You don't have permission to execute that command! (user ID: ${m.author.id}.)`);
       return false;
     }
   }
