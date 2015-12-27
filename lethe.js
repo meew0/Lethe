@@ -200,7 +200,6 @@ client.on('message', m => {
 
     request.get(requestUrl).end((error, response) => {
       if (!error && response.statusCode == 200) {
-        console.log(response);
         var body = response.body;
         if (body.items.length == 0) {
           client.reply(m, 'That playlist has no videos.');
@@ -395,7 +394,6 @@ function spliceArguments(message, after) {
 }
 
 function saveVideo(video, vid, keywords, m) {
-  console.log(video);
   simplified = video.saveable();
   if (Saved.saved.videos.hasOwnProperty(keywords)) client.reply(m, `Warning: ${Saved.saved.videos[keywords].prettyPrint()} is already saved as *${keywords}*! Overwriting.`);
 
