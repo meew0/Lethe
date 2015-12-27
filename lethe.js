@@ -311,7 +311,7 @@ client.on('message', m => {
       playQueue.forEach((video, idx) => {
         if (shouldBreak) return;
 
-        var formattedVideo = `${idx + 1}. ${currentVideo.fullPrint()}\n`;
+        var formattedVideo = `${idx + 1}. ${video.fullPrint()}\n`;
 
         if ((formattedList.length + formattedVideo.length) > 1950) {
           formattedList += `... and ${playQueue.length - idx} more`;
