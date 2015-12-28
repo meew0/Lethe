@@ -269,9 +269,9 @@ client.on('message', m => {
       Util.haste(formattedList, (key) => {
         if (!key) {
           client.reply(m, 'There was an error while retrieving the list of saved videos! Sorry :(');
+        } else {
+          client.reply(m, `http://hastebin.com/${key}.md`);
         }
-
-        client.reply(m, `http://hastebin.com/${key}.md`);
       });
     } else client.reply(m, formattedList);
     return; // so list doesn't get triggered
