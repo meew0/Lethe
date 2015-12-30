@@ -436,7 +436,12 @@ function play(video) {
     currentStream = video.getStream();
 
     currentStream.on('error', (err) => {
-      boundChannel.sendMessage(`There was an error during playback! **${err}**`);
+      if (err.code === 'ECONNRESET') {
+        boundChannel.sendMessage(`There was a network error during playback! The connection to YouTube may be unstable. Auto-skipping to the next video...`);
+      } else {
+        boundChannel.sendMessage(`There was an error during playback! **${err}**`);
+      }
+      playStopped(); // skip to next video
     });
 
     currentStream.on('end', () => setTimeout(playStopped, Config.timeOffset || 8000)); // 8 second leeway for bad timing
