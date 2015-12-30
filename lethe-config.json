@@ -1,8 +1,9 @@
 {
-  "configRev": 2,
+  "configRev": 3,
   "timeOffset": 8000,
   "maxLength": -1,
   "userQueueLimit": -1,
+  "playbackNetworkMessage": true,
   "checksEnabled": {
     "checkDuplicateVideo": false,
     "checkDuplicateUser": false,

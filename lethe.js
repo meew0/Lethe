@@ -19,7 +19,7 @@ var YoutubeTrack = require('./lib/youtube-track.js');
 
 var Util = require('./lib/util.js');
 var Config = require('./lib/config.js');
-var CURRENT_REV = 2;
+var CURRENT_REV = 3;
 
 var client = new Discord.Client();
 
@@ -442,7 +442,9 @@ function play(video) {
 
     currentStream.on('error', (err) => {
       if (err.code === 'ECONNRESET') {
-        boundChannel.sendMessage(`There was a network error during playback! The connection to YouTube may be unstable. Auto-skipping to the next video...`);
+        if (!Config.suppressPlaybackNetworkError) {
+          boundChannel.sendMessage(`There was a network error during playback! The connection to YouTube may be unstable. Auto-skipping to the next video...`);
+        }
       } else {
         boundChannel.sendMessage(`There was an error during playback! **${err}**`);
       }
