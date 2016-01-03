@@ -7,7 +7,7 @@ Lethe works best on Linux, but it can also be installed on Windows, though this 
 
 If you're on Windows, you should install node-opus before everything else, as there may be problems with the installation:
 ```
-$ npm install node-opus
+npm install node-opus
 ```
 If there are any, follow the instructions on how to fix them. See issue #9 for more information.
 
@@ -15,14 +15,16 @@ Then, install [ffmpeg](https://www.ffmpeg.org/download.html). Depending on your 
 
 Finally, install Lethe itself:
 ```
-$ npm install meew0/Lethe
+git clone https://github.com/meew0/Lethe.git
+cd Lethe
+npm install
 ```
 
 ## Usage
 Run Lethe using the email and password as command line arguments:
 
 ```
-$ node lethe.js email@example.com hunter2 YouTube-api-key(optional)
+node lethe.js email@example.com hunter2 YouTube-api-key(optional)
 ```
 
 Then, run commands over Discord using the bot's username mention as a prefix, for example:
@@ -54,5 +56,5 @@ The following commands will only work inside the text channel Lethe was bound to
 `save [id] [keyword]` Saves a video under a keyword. It can later be played back using `yt`.  
 `time`: Gets the time the video is currently at.  
 `yq [search-value]`: Searches a youtube video that matches the search value.  
-`pl [playlist-id]`: Queues the 50 first videos of a playlist.
+`pl [playlist-id]`: Queues the 50 first videos of a playlist.  
 `shuffle`: Shuffles the videos in the queue.
