@@ -1,6 +1,6 @@
 {
   "name": "Lethe",
-  "description": "YouTube playback bot for Discord",
+  "description": "Simple YouTube playback bot for Discord",
   "main": "./lethe.js",
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/meew0/Lethe#readme",
   "dependencies": {
-    "discord.js": "hydrabolt/discord.js#e315fdafc6750ab45bad6f1927fee6d759b42381",
-    "request": "^2.67.0",
-    "ytdl-core": "^0.7.6",
+    "discord.js": "hydrabolt/discord.js#master",
+    "superagent": "^1.6.1",
+    "ytdl-core": "^0.7.9",
     "node-opus": "^0.1.11",
     "git-rev": "^0.2.1"
   },

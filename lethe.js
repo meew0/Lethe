@@ -43,11 +43,7 @@ var shouldStockpile = false;
 var stockpile = '';
 
 // Handling api key
-if (process.argv[4]) {
-  var apiKey = process.argv[4];
-} else {
-  var apiKey = false;
-}
+var apiKey = process.argv[4] || (Config.apiKey !== "youtube API key (optional)") ? Config.apiKey : false;
 
 client.on('ready', () => {
   botMention = `<@${client.user.id}>`;
@@ -60,6 +56,8 @@ client.on('ready', () => {
 client.on('message', m => {
   if (!botMention) return;
   if (client.user.id == m.author.id) return;
+
+  if (!m.content.startsWith(`${botMention} `) || m.content.length <= botMention.length + 1) return;
 
   if (m.content.startsWith(`${botMention} info`)) {
     if (!checkCommand(m, 'info')) return;
@@ -89,6 +87,7 @@ client.on('message', m => {
         }
       }
     }
+    return;
   }
 
   if (m.content.startsWith(`${botMention} d`)) { // destroy
@@ -113,6 +112,7 @@ client.on('message', m => {
     } else {
       client.reply(m, 'No video is currently playing.');
     }
+    return;
   }
 
   if (m.content.startsWith(`${botMention} yq`) // youtube query
@@ -122,7 +122,7 @@ client.on('message', m => {
 
     if (!checkCommand(m, 'yq')) return;
 
-    if (apiKey == false) {
+    if (!apiKey) {
       client.reply(m, 'Search is disabled (no API KEY found).');
       return;
     }
@@ -166,7 +166,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} pl`)) { // playlist
     if (!checkCommand(m, 'pl')) return;
 
-    if (apiKey == false) {
+    if (!apiKey) {
       client.reply(m, 'Playlist adding is disabled (no API KEY found).');
       return;
     }
@@ -223,6 +223,7 @@ client.on('message', m => {
       if (idx == 2) suppress = -1;
       parseVidAndQueue(vid, m, suppress);
     });
+    return;
   }
 
   if (m.content.startsWith(`${botMention} r`)) { // replay
@@ -235,6 +236,7 @@ client.on('message', m => {
 
     playQueue.push(videoToPlay);
     client.reply(m, `Queued ${videoToPlay.prettyPrint()}`);
+    return;
   }
 
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
@@ -305,6 +307,7 @@ client.on('message', m => {
     }
 
     client.reply(m, formattedList);
+    return;
   }
 
   if (m.content.startsWith(`${botMention} s`)) { // save
@@ -324,6 +327,7 @@ client.on('message', m => {
       if (err) handleYTError(err);
       else saveVideo(info, vid, splitArgs[1], m);
     });
+    return;
   }
 
   if (m.content.startsWith(`${botMention} t`)) { // time
@@ -332,6 +336,7 @@ client.on('message', m => {
     var streamSeconds = streamTime / 1000;
     var videoTime = currentVideo.lengthSeconds;
     client.reply(m, `${Util.formatTime(streamSeconds)} / ${Util.formatTime(videoTime)} (${((streamSeconds * 100) / videoTime).toFixed(2)} %)`);
+    return;
   }
 });
 
@@ -493,7 +498,19 @@ function error(argument) {
 }
 
 // Email and password over command line
-client.login(process.argv[2], process.argv[3]).catch((e) => console.log(e));
+client.login(process.argv[2] || Config.auth.email, process.argv[3] || Config.auth.password).catch((e) => {
+  try {
+    if(e.status === 400 && ~e.response.error.text.indexOf("email")) {
+      console.log("Error: You entered a bad email!");
+    } else if(e.status === 400 && ~e.response.error.text.indexOf("password")) {
+      console.log("Error: You entered a bad password!");
+    } else {
+      console.log(e);
+    }
+  } catch (err) {
+    console.log(e);
+  }
+});
 
 process.on('uncaughtException', function(err) {
   // Handle ECONNRESETs caused by `next` or `destroy`
