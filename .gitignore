@@ -28,3 +28,6 @@ node_modules
 
 # Video data saved by Lethe itself
 lethe-data.json
+
+# Auth details
+lethe-auth.json
