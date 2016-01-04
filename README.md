@@ -5,6 +5,8 @@ Lethe works best on Linux, but it can also be installed on Windows, though this 
 
 ## Installation
 
+**You might also want to take a look at the [Beginner's Guide](https://github.com/meew0/Lethe/wiki/Beginner's-Guide-to-Lethe-Installation) if all this intimidates you.
+
 If you're on Windows, you should install node-opus before everything else, as there may be problems with the installation:
 ```
 npm install node-opus
