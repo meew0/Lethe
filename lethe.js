@@ -75,7 +75,11 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} h`)) { // help
     if (!checkCommand(m, 'help')) return;
-    client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
+	client.sendMessage(m.author, "Here are the commands I support:\n**Queue a video:** yt [video ID/URL]\n**List Queue:** list\n**Create a shortcut:** save [video ID/URL] [shortcut]\n**Queue a playlist:** pl [playlist ID/URL]\n**Shuffle Queue:** shuffle\n**Skip current video:** n\n**Get YouTube URL:** link\n**Get time:** time\n**Replay Video:** replay\n**Search YouTube:** yq [search term]").then(msg => {
+		client.reply(m, `I\'ve sent you my commands`);
+	}).catch(e => {
+		client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
+	})
     return;
   }
 
@@ -258,7 +262,7 @@ client.on('message', m => {
     client.reply(m, `Queued ${videoToPlay.prettyPrint()}`);
     return;
   }
-
+  
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
     if (!checkCommand(m, 'shuffle')) return;
     if (playQueue.length < 2) {
