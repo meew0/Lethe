@@ -283,8 +283,12 @@ client.on('message', m => {
     if (!checkCommand(m, 'list')) return;
 
     var formattedList = '';
-    if (currentVideo) formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
-
+	var overallTime = 0;
+    if (currentVideo){
+	  formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
+	  overallTime = Number(currentVideo.getTime());
+	}
+	
     if (playQueue.length == 0) {
       formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
     } else {
@@ -293,6 +297,7 @@ client.on('message', m => {
       var shouldBreak = false;
 
       playQueue.forEach((video, idx) => {
+		overallTime = Number(overallTime) + Number(video.getTime());
         if (shouldBreak) return;
 
         var formattedVideo = `${idx + 1}. ${video.fullPrint()}\n`;
@@ -304,6 +309,7 @@ client.on('message', m => {
           formattedList += formattedVideo;
         }
       });
+	  formattedList += `\n**Remaining Play Time: ** ${Util.formatTime(overallTime)} minutes...`;
     }
 
     client.reply(m, formattedList);
