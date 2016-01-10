@@ -19,7 +19,7 @@ var YoutubeTrack = require('./lib/youtube-track.js');
 
 var Util = require('./lib/util.js');
 var Config = require('./lib/config.js');
-var CURRENT_REV = 3;
+var CURRENT_REV = 2;
 
 var client = new Discord.Client();
 
@@ -43,7 +43,11 @@ var shouldStockpile = false;
 var stockpile = '';
 
 // Handling api key
-var apiKey = process.argv[4] || (Config.auth.apiKey !== "youtube API key (optional)") ? Config.auth.apiKey : false;
+if (process.argv[4]) {
+  var apiKey = process.argv[4];
+} else {
+  var apiKey = false;
+}
 
 client.on('ready', () => {
   botMention = `<@${client.user.id}>`;
@@ -56,8 +60,6 @@ client.on('ready', () => {
 client.on('message', m => {
   if (!botMention) return;
   if (client.user.id == m.author.id) return;
-
-  if (!m.content.startsWith(`${botMention} `) || m.content.length <= botMention.length + 1) return;
 
   if (m.content.startsWith(`${botMention} info`)) {
     if (!checkCommand(m, 'info')) return;
@@ -87,7 +89,6 @@ client.on('message', m => {
         }
       }
     }
-    return;
   }
 
   if (m.content.startsWith(`${botMention} d`)) { // destroy
@@ -112,7 +113,6 @@ client.on('message', m => {
     } else {
       client.reply(m, 'No video is currently playing.');
     }
-    return;
   }
 
   if (m.content.startsWith(`${botMention} yq`) // youtube query
@@ -122,7 +122,7 @@ client.on('message', m => {
 
     if (!checkCommand(m, 'yq')) return;
 
-    if (!apiKey) {
+    if (apiKey == false) {
       client.reply(m, 'Search is disabled (no API KEY found).');
       return;
     }
@@ -166,7 +166,7 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} pl`)) { // playlist
     if (!checkCommand(m, 'pl')) return;
 
-    if (!apiKey) {
+    if (apiKey == false) {
       client.reply(m, 'Playlist adding is disabled (no API KEY found).');
       return;
     }
@@ -223,7 +223,6 @@ client.on('message', m => {
       if (idx == 2) suppress = -1;
       parseVidAndQueue(vid, m, suppress);
     });
-    return;
   }
 
   if (m.content.startsWith(`${botMention} r`)) { // replay
@@ -236,7 +235,6 @@ client.on('message', m => {
 
     playQueue.push(videoToPlay);
     client.reply(m, `Queued ${videoToPlay.prettyPrint()}`);
-    return;
   }
 
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
@@ -283,16 +281,20 @@ client.on('message', m => {
     if (!checkCommand(m, 'list')) return;
 
     var formattedList = '';
-    if (currentVideo) formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
+	var overallTime = 0;
+    if (currentVideo) {
+	  formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
+	  overallTime = Number(currentVideo.getTime());
+	}
 
     if (playQueue.length == 0) {
       formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
     } else {
       formattedList += 'Here are the videos currently in the play queue, from first added to last added: \n';
-
       var shouldBreak = false;
 
       playQueue.forEach((video, idx) => {
+		overallTime = Number(overallTime) + Number(video.getTime());
         if (shouldBreak) return;
 
         var formattedVideo = `${idx + 1}. ${video.fullPrint()}\n`;
@@ -304,10 +306,10 @@ client.on('message', m => {
           formattedList += formattedVideo;
         }
       });
+	  formattedList += `\n**Remaining Play Time: ** ${Util.formatTime(overallTime)} minutes...`;
     }
 
     client.reply(m, formattedList);
-    return;
   }
 
   if (m.content.startsWith(`${botMention} s`)) { // save
@@ -327,7 +329,6 @@ client.on('message', m => {
       if (err) handleYTError(err);
       else saveVideo(info, vid, splitArgs[1], m);
     });
-    return;
   }
 
   if (m.content.startsWith(`${botMention} t`)) { // time
@@ -336,7 +337,6 @@ client.on('message', m => {
     var streamSeconds = streamTime / 1000;
     var videoTime = currentVideo.lengthSeconds;
     client.reply(m, `${Util.formatTime(streamSeconds)} / ${Util.formatTime(videoTime)} (${((streamSeconds * 100) / videoTime).toFixed(2)} %)`);
-    return;
   }
 });
 
@@ -442,9 +442,7 @@ function play(video) {
 
     currentStream.on('error', (err) => {
       if (err.code === 'ECONNRESET') {
-        if (!Config.suppressPlaybackNetworkError) {
-          boundChannel.sendMessage(`There was a network error during playback! The connection to YouTube may be unstable. Auto-skipping to the next video...`);
-        }
+        boundChannel.sendMessage(`There was a network error during playback! The connection to YouTube may be unstable. Auto-skipping to the next video...`);
       } else {
         boundChannel.sendMessage(`There was an error during playback! **${err}**`);
       }
@@ -500,19 +498,7 @@ function error(argument) {
 }
 
 // Email and password over command line
-client.login(process.argv[2] || Config.auth.email, process.argv[3] || Config.auth.password).catch((e) => {
-  try {
-    if(e.status === 400 && ~e.response.error.text.indexOf("email")) {
-      console.log("Error: You entered a bad email!");
-    } else if(e.status === 400 && ~e.response.error.text.indexOf("password")) {
-      console.log("Error: You entered a bad password!");
-    } else {
-      console.log(e);
-    }
-  } catch (err) {
-    console.log(e);
-  }
-});
+client.login(process.argv[2], process.argv[3]).catch((e) => console.log(e));
 
 process.on('uncaughtException', function(err) {
   // Handle ECONNRESETs caused by `next` or `destroy`
