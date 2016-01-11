@@ -1,3 +1,4 @@
+![Warning Banner for Debug](http://i.imgur.com/AG2nc64.png)
 ![Lethe Banner](http://i.imgur.com/VHaggpM.png)
 A simple YouTube playback bot for Discord using discord.js. Lethe is a WIP, that means crashes can occur. Please report any crashes not already reported as a GitHub [issue](https://github.com/meew0/Lethe/issues).
 
