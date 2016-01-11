@@ -43,7 +43,16 @@ var shouldStockpile = false;
 var stockpile = '';
 
 // Handling api key
-var apiKey = process.argv[4] || (Config.auth.apiKey !== "youtube API key (optional)") ? Config.auth.apiKey : false;
+var apiKey = false;
+
+if (process.argv[4])
+{
+	apiKey = process.argv[4];
+}
+else if (Config.auth.apiKey !== "youtube API key (optional)")
+{
+	apiKey = Config.auth.apiKey;
+}
 
 client.on('ready', () => {
   botMention = `<@${client.user.id}>`;
