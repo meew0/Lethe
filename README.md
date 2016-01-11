@@ -1,4 +1,4 @@
-# Lethe
+![Lethe Banner](http://i.imgur.com/VHaggpM.png)
 Simple YouTube playback bot for Discord. Lethe is WIP, so expect crashes (it has significantly improved from the past though!) Please report any crashes as a GitHub [issue](https://github.com/meew0/Lethe/issues).
 
 Lethe works best on Linux, but it can also be installed on Windows, though this is not recommended.
