@@ -19,7 +19,7 @@ var YoutubeTrack = require('./lib/youtube-track.js');
 
 var Util = require('./lib/util.js');
 var Config = require('./lib/config.js');
-var CURRENT_REV = 3;
+var CURRENT_REV = 4;
 
 var client = new Discord.Client();
 
@@ -75,23 +75,27 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} h`)) { // help
     if (!checkCommand(m, 'help')) return;
-    client.sendMessage(m.author,
-       `Here are the commands I support:
-        **Queue a video:** yt [video ID/URL]
-        **List videos in queue:** list
-        **Create a shortcut:** save [video ID/URL] [shortcut name]
-        **Queue a playlist:** pl [playlist ID/URL]
-        **Shuffle queue:** shuffle
-        **Skip current video:** next
-        **Get YouTube URL:** link
-        **Get current playback time:** time
-        **Replay Video:** replay
-        **Search YouTube:** yq [search term]`
-    ).then(msg => {
-      client.reply(m, `I\'ve sent you my commands`);
-    }).catch(e => {
+
+    if (Config.shouldUsePMs) {
+      client.sendMessage(m.author,
+         `Here are the commands I support:
+          **Queue a video:** yt [video ID/URL]
+          **List videos in queue:** list
+          **Create a shortcut:** save [video ID/URL] [shortcut name]
+          **Queue a playlist:** pl [playlist ID/URL]
+          **Shuffle queue:** shuffle
+          **Skip current video:** next
+          **Get YouTube URL:** link
+          **Get current playback time:** time
+          **Replay Video:** replay
+          **Search YouTube:** yq [search term]`
+      ).then(msg => {
+        client.reply(m, `I\'ve sent you my commands in PM`);
+      });
+    } else {
       client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
-    });
+    }
+
     return;
   }
 
