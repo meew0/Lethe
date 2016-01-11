@@ -72,9 +72,10 @@ Where "Bot" is your bot's username.
 The following commands will only work inside the text channel Lethe was bound to.
 
 `yt [id]`: Queues a video from YouTube to be played. If this is the only song in the queue, start playback. `queue [id]` does the same thing, as does `play [id]`. `id` can be replaced with a keyword used to save a video using `save`.  
-`list`: Lists the videos on the queue.
-`list all` : Private Messages all current songs to you.
-`list saved` : Lists all saved songs. **May cause a crash**
+  
+`list`: Lists the videos on the queue.  
+`list all` : Private Messages all current songs to you.  
+`list saved` : Lists all saved songs. **May cause a crash**  
 `link`: Gets the link to view the video currently playing.  
 `next`: Stops the current playback and skips to the next video in the queue.  
 `replay`: Adds the current video again to the back of the queue.  
@@ -82,5 +83,5 @@ The following commands will only work inside the text channel Lethe was bound to
 `time`: Gets the time the video is currently at.  
 `yq [search-value]`: Searches a youtube video that matches the search value.  
 `pl [playlist-id]`: Queues the 50 first videos of a playlist.  
-`shuffle`: Shuffles the videos in the queue.
+`shuffle`: Shuffles the videos in the queue.  
 `help` : Returns the list above in a private message.
