@@ -85,15 +85,34 @@ client.on('message', m => {
   if (m.content.startsWith(`${botMention} i`)) { // init
     if (!checkCommand(m, 'init')) return;
     if (boundChannel) return;
+	var userChannel = m.author.voiceChannel;
     var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
       if (channel instanceof Discord.VoiceChannel) {
-        if (!channelToJoin || channel.name === channelToJoin) {
+		if (!channelToJoin)
+		{
+		  if (userChannel)
+		  {
+            boundChannel = m.channel;
+            client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${userChannel.name}** \`(${userChannel.id})\``);
+            client.joinVoiceChannel(userChannel).catch(error);
+            break;
+		  }
+		  else
+		  {
+            boundChannel = m.channel;
+            client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${channel.name}** \`(${channel.id})\``);
+            client.joinVoiceChannel(channel).catch(error);
+            break;
+		  }
+		}
+		else if (channel.name === channelToJoin)
+		{
           boundChannel = m.channel;
           client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${channel.name}** \`(${channel.id})\``);
           client.joinVoiceChannel(channel).catch(error);
           break;
-        }
+		}
       }
     }
     return;
