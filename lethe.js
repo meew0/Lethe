@@ -81,6 +81,8 @@ client.on('message', m => {
          `Here are the commands I support:
           **Queue a video:** yt [video ID/URL]
           **List videos in queue:** list
+          **PM an entire list of videos in queue:** list all
+          **List all saved videos:** list saved
           **Create a shortcut:** save [video ID/URL] [shortcut name]
           **Queue a playlist:** pl [playlist ID/URL]
           **Shuffle queue:** shuffle
@@ -318,6 +320,51 @@ client.on('message', m => {
     } else client.reply(m, formattedList);
     return; // so list doesn't get triggered
   }
+  
+  if (m.content.startsWith(`${botMention} list a`)) {
+    if (!checkCommand(m, 'list')) return;
+
+    var formattedList = '';
+    var overallTime = 0;
+    if (currentVideo) {
+      formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
+      overallTime = Number(currentVideo.getTime());
+    }
+
+    if (playQueue.length == 0) {
+      formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
+    } else {
+      formattedList += 'Here are the videos currently in the play queue, from first added to last added: \n';
+	  
+      playQueue.forEach((video, idx) => {
+        overallTime = Number(overallTime) + Number(video.getTime());
+        var formattedVideo = `${idx + 1}. ${video.fullPrint()}\n`;
+        if ((formattedList.length + formattedVideo.length) > 1920) {
+		  client.sendMessage(m.author, formattedList);
+		  formattedList = formattedVideo;
+        } else {
+          formattedList += formattedVideo;
+        }
+      });
+	  var hoursOf = Math.floor(overallTime / 60 / 60);
+	  var minutesOf = Math.floor((overallTime - (hoursOf * 60 * 60)) / 60);
+	  var stringTime;
+	  if (hoursOf != 0)
+	  {
+		stringTime = hoursOf + " hours and " + minutesOf + " minute(s)..."
+	  }
+	  else
+	  {
+		stringTime = minutesOf + " minute(s)..."
+	  }
+      formattedList += `\n**Remaining play time:** ${stringTime}`;
+    }
+	
+    client.sendMessage(m.author, formattedList).then(msg => {
+      client.reply(m, `I\'ve sent you the full list.`);
+    });	
+    return;
+  }
 
   if (m.content.startsWith(`${botMention} l`)) { // list
     if (!checkCommand(m, 'list')) return;
@@ -349,7 +396,18 @@ client.on('message', m => {
           formattedList += formattedVideo;
         }
       });
-      formattedList += `\n**Remaining play time:** ${Util.formatTime(overallTime)} minutes.`;
+	  var hoursOf = Math.floor(overallTime / 60 / 60);
+	  var minutesOf = Math.floor((overallTime - (hoursOf * 60 * 60)) / 60);
+	  var stringTime;
+	  if (hoursOf != 0)
+	  {
+		stringTime = hoursOf + " hours and " + minutesOf + " minute(s)..."
+	  }
+	  else
+	  {
+		stringTime = minutesOf + " minute(s)..."
+	  }
+      formattedList += `\n**Remaining play time:** ${stringTime}`;
     }
 
     client.reply(m, formattedList);
