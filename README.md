@@ -64,8 +64,9 @@ The following commands will only work inside the text channel Lethe was bound to
 
 `yt [id]`: Queues a video from YouTube to be played. If this is the only song in the queue, start playback. `queue [id]` does the same thing, as does `play [id]`. `id` can be replaced with a keyword used to save a video using `save`.  
   
-`list`: Lists the videos on the queue.
-`list saved` : Lists all saved songs. 
+`list`: Lists the videos on the queue.  
+`list all` : PMs all videos in the queue.   
+`list saved` : Lists all saved songs.   
 `link`: Gets the link to view the video currently playing.  
 `next`: Stops the current playback and skips to the next video in the queue.  
 `replay`: Adds the current video again to the back of the queue.  
