@@ -19,7 +19,7 @@ var YoutubeTrack = require('./lib/youtube-track.js');
 
 var Util = require('./lib/util.js');
 var Config = require('./lib/config.js');
-var CURRENT_REV = 3;
+var CURRENT_REV = 4;
 
 var client = new Discord.Client();
 
@@ -45,13 +45,10 @@ var stockpile = '';
 // Handling api key
 var apiKey = false;
 
-if (process.argv[4])
-{
-	apiKey = process.argv[4];
-}
-else if (Config.auth.apiKey !== "youtube API key (optional)")
-{
-	apiKey = Config.auth.apiKey;
+if (process.argv[4]) {
+  apiKey = process.argv[4];
+} else if (Config.auth.apiKey !== 'youtube API key (optional)') {
+  apiKey = Config.auth.apiKey;
 }
 
 client.on('ready', () => {
@@ -78,47 +75,57 @@ client.on('message', m => {
 
   if (m.content.startsWith(`${botMention} h`)) { // help
     if (!checkCommand(m, 'help')) return;
-	client.sendMessage(m.author, "Here are the commands I support:\n**Queue a video:** yt [video ID/URL]\n**List Queue:** list\n**Create a shortcut:** save [video ID/URL] [shortcut]\n**Queue a playlist:** pl [playlist ID/URL]\n**Shuffle Queue:** shuffle\n**Skip current video:** n\n**Get YouTube URL:** link\n**Get time:** time\n**Replay Video:** replay\n**Search YouTube:** yq [search term]").then(msg => {
-		client.reply(m, `I\'ve sent you my commands`);
-	}).catch(e => {
-		client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
-	})
+
+    if (Config.shouldUsePMs) {
+      client.sendMessage(m.author,
+         `Here are the commands I support:
+          **Queue a video:** yt [video ID/URL]
+          **List videos in queue:** list
+          **Create a shortcut:** save [video ID/URL] [shortcut name]
+          **Queue a playlist:** pl [playlist ID/URL]
+          **Shuffle queue:** shuffle
+          **Skip current video:** next
+          **Get YouTube URL:** link
+          **Get current playback time:** time
+          **Replay Video:** replay
+          **Search YouTube:** yq [search term]`
+      ).then(msg => {
+        client.reply(m, `I\'ve sent you my commands in PM`);
+      });
+    } else {
+      client.reply(m, 'Usage info can be found here: https://github.com/meew0/Lethe/wiki/Usage');
+    }
+
     return;
   }
 
   if (m.content.startsWith(`${botMention} i`)) { // init
     if (!checkCommand(m, 'init')) return;
     if (boundChannel) return;
-	var userChannel = m.author.voiceChannel;
+    var userChannel = m.author.voiceChannel;
     var channelToJoin = spliceArguments(m.content)[1];
     for (var channel of m.channel.server.channels) {
       if (channel instanceof Discord.VoiceChannel) {
-		if (!channelToJoin)
-		{
-		  if (userChannel)
-		  {
-            boundChannel = m.channel;
+        if (!channelToJoin) {
+          boundChannel = m.channel;
+          if (userChannel) {
             client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${userChannel.name}** \`(${userChannel.id})\``);
             client.joinVoiceChannel(userChannel).catch(error);
-            break;
-		  }
-		  else
-		  {
-            boundChannel = m.channel;
+          } else {
             client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${channel.name}** \`(${channel.id})\``);
             client.joinVoiceChannel(channel).catch(error);
-            break;
-		  }
-		}
-		else if (channel.name === channelToJoin)
-		{
+          }
+
+          break;
+        } else if (channel.name === channelToJoin) {
           boundChannel = m.channel;
           client.reply(m, `Binding to text channel <#${boundChannel.id}> and voice channel **${channel.name}** \`(${channel.id})\``);
           client.joinVoiceChannel(channel).catch(error);
           break;
-		}
+        }
       }
     }
+
     return;
   }
 
@@ -144,6 +151,7 @@ client.on('message', m => {
     } else {
       client.reply(m, 'No video is currently playing.');
     }
+
     return;
   }
 
@@ -270,7 +278,7 @@ client.on('message', m => {
     client.reply(m, `Queued ${videoToPlay.prettyPrint()}`);
     return;
   }
-  
+
   if (m.content.startsWith(`${botMention} sh`)) { // shuffle
     if (!checkCommand(m, 'shuffle')) return;
     if (playQueue.length < 2) {
@@ -315,12 +323,12 @@ client.on('message', m => {
     if (!checkCommand(m, 'list')) return;
 
     var formattedList = '';
-	var overallTime = 0;
-    if (currentVideo){
-	  formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
-	  overallTime = Number(currentVideo.getTime());
-	}
-	
+    var overallTime = 0;
+    if (currentVideo) {
+      formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
+      overallTime = Number(currentVideo.getTime());
+    }
+
     if (playQueue.length == 0) {
       formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
     } else {
@@ -329,19 +337,19 @@ client.on('message', m => {
       var shouldBreak = false;
 
       playQueue.forEach((video, idx) => {
-		overallTime = Number(overallTime) + Number(video.getTime());
+        overallTime = Number(overallTime) + Number(video.getTime());
         if (shouldBreak) return;
 
         var formattedVideo = `${idx + 1}. ${video.fullPrint()}\n`;
 
-        if ((formattedList.length + formattedVideo.length) > 1950) {
+        if ((formattedList.length + formattedVideo.length) > 1920) {
           formattedList += `... and ${playQueue.length - idx} more`;
           shouldBreak = true;
         } else {
           formattedList += formattedVideo;
         }
       });
-	  formattedList += `\n**Remaining Play Time: ** ${Util.formatTime(overallTime)} minutes...`;
+      formattedList += `\n**Remaining play time:** ${Util.formatTime(overallTime)} minutes.`;
     }
 
     client.reply(m, formattedList);
@@ -486,6 +494,7 @@ function play(video) {
       } else {
         boundChannel.sendMessage(`There was an error during playback! **${err}**`);
       }
+
       playStopped(); // skip to next video
     });
 
@@ -540,10 +549,10 @@ function error(argument) {
 // Email and password over command line
 client.login(process.argv[2] || Config.auth.email, process.argv[3] || Config.auth.password).catch((e) => {
   try {
-    if(e.status === 400 && ~e.response.error.text.indexOf("email")) {
-      console.log("Error: You entered a bad email!");
-    } else if(e.status === 400 && ~e.response.error.text.indexOf("password")) {
-      console.log("Error: You entered a bad password!");
+    if (e.status === 400 && ~e.response.error.text.indexOf('email')) {
+      console.log('Error: You entered a bad email!');
+    } else if (e.status === 400 && ~e.response.error.text.indexOf('password')) {
+      console.log('Error: You entered a bad password!');
     } else {
       console.log(e);
     }
