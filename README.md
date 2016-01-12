@@ -1,5 +1,4 @@
-![Warning Banner for Debug](http://i.imgur.com/AG2nc64.png)
-![Lethe Banner](http://i.imgur.com/VHaggpM.png)
+![Lethe Banner](http://i.imgur.com/5lD21hG.png)
 A simple YouTube playback bot for Discord using discord.js. Lethe is a WIP, that means crashes can occur. Please report any crashes not already reported as a GitHub [issue](https://github.com/meew0/Lethe/issues).
 
 Lethe works best on Linux, but can be installed on Windows.
@@ -32,7 +31,7 @@ node lethe.js email@example.com hunter2 YouTube-api-key(optional)
 ```
 
 ####Run by pre-set credentials in lethe-auth.json
-Change the values inside lethe-auth.json to make it easier to run Lethe.
+Change the values inside lethe-auth.json to save your login and start Lethe faster.
 ```
 {
   "email": "discord email",
@@ -47,15 +46,6 @@ Now you can run commands over Discord using the bot's username mention as a pref
 
 ```
 @Bot init
-```
-Where "Bot" is your bot's username.
-
-###First Run
-On your first run, you must set the permissions for Lethe. To do this, you must be able to manage your Discord server OR modify the lethe-config.json file manaully to add your user id.
-
-If you have permission to manage the Discord server your bot will be attached to, use the following command:
-```
-@Bot runonce
 ```
 Where "Bot" is your bot's username.
 
@@ -74,9 +64,8 @@ The following commands will only work inside the text channel Lethe was bound to
 
 `yt [id]`: Queues a video from YouTube to be played. If this is the only song in the queue, start playback. `queue [id]` does the same thing, as does `play [id]`. `id` can be replaced with a keyword used to save a video using `save`.  
   
-`list`: Lists the videos on the queue.  
-`list all` : Private Messages all current songs to you.  
-`list saved` : Lists all saved songs. **May cause a crash**  
+`list`: Lists the videos on the queue.
+`list saved` : Lists all saved songs. 
 `link`: Gets the link to view the video currently playing.  
 `next`: Stops the current playback and skips to the next video in the queue.  
 `replay`: Adds the current video again to the back of the queue.  
@@ -86,3 +75,4 @@ The following commands will only work inside the text channel Lethe was bound to
 `pl [playlist-id]`: Queues the 50 first videos of a playlist.  
 `shuffle`: Shuffles the videos in the queue.  
 `help` : Returns the list above in a private message.
+View detailed Usage info at the [Wiki](https://github.com/meew0/Lethe/wiki/Usage)
