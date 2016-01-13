@@ -23,14 +23,14 @@ npm install
 ```
 
 ## Usage
-####Run by Command Line Arguments
+###Run by Command Line Arguments
 Run Lethe using the email and password as command line arguments:
 
 ```
 node lethe.js email@example.com hunter2 YouTube-api-key(optional)
 ```
 
-####Run by pre-set credentials in lethe-auth.json
+###Run by pre-set credentials in lethe-auth.json
 Change the values inside lethe-auth.json to save your login and start Lethe faster.
 ```
 {
