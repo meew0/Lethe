@@ -325,11 +325,14 @@ client.on('message', m => {
     if (!checkCommand(m, 'list')) return;
 
     var formattedList = '';
+	var hasteList = '';
+	var hasteCount = 0;
     var overallTime = 0;
     if (currentVideo) {
       formattedList += `Currently playing: ${currentVideo.fullPrint()}\n`;
       overallTime = Number(currentVideo.getTime());
     }
+	var messageCount = 0;
 
     if (playQueue.length == 0) {
       formattedList += `The play queue is empty! Add something using **${botMention} yt *<video ID>***.`;
@@ -339,25 +342,33 @@ client.on('message', m => {
       playQueue.forEach((video, idx) => {
         overallTime = Number(overallTime) + Number(video.getTime());
         var formattedVideo = `${idx + 1}. ${video.fullPrint()}\n`;
-        if ((formattedList.length + formattedVideo.length) > 1920) {
-		  client.sendMessage(m.author, formattedList);
-		  formattedList = formattedVideo;
-        } else {
-          formattedList += formattedVideo;
-        }
+		if (messageCount == 2)
+		{
+			hasteList += formattedVideo;
+			hasteCount++;
+		}
+		else
+		{
+			if ((formattedList.length + formattedVideo.length) > 1920) {
+				client.sendMessage(m.author, formattedList);
+				messageCount++;
+				formattedList = formattedVideo;
+			} else {
+				formattedList += formattedVideo;
+			}
+		}
       });
-	  var hoursOf = Math.floor(overallTime / 60 / 60);
-	  var minutesOf = Math.floor((overallTime - (hoursOf * 60 * 60)) / 60);
-	  var stringTime;
-	  if (hoursOf != 0)
-	  {
-		stringTime = hoursOf + " hours and " + minutesOf + " minute(s)..."
+	  if (hasteList!="")
+	  { 
+		Util.haste(formattedList + hasteList, (key) => {
+			if (!key) {
+				formattedList += `and ${hasteCount} more videos...`;
+			} else {
+				formattedList += `and ${hasteCount} more videos available here: http://hastebin.com/${key}.md`;
+			}
+		});
 	  }
-	  else
-	  {
-		stringTime = minutesOf + " minute(s)..."
-	  }
-      formattedList += `\n**Remaining play time:** ${stringTime}`;
+      formattedList += `\n**Remaining play time:** ${niceTime(overallTime)}`;
     }
 	
     client.sendMessage(m.author, formattedList).then(msg => {
@@ -396,18 +407,7 @@ client.on('message', m => {
           formattedList += formattedVideo;
         }
       });
-	  var hoursOf = Math.floor(overallTime / 60 / 60);
-	  var minutesOf = Math.floor((overallTime - (hoursOf * 60 * 60)) / 60);
-	  var stringTime;
-	  if (hoursOf != 0)
-	  {
-		stringTime = hoursOf + " hours and " + minutesOf + " minute(s)..."
-	  }
-	  else
-	  {
-		stringTime = minutesOf + " minute(s)..."
-	  }
-      formattedList += `\n**Remaining play time:** ${stringTime}`;
+      formattedList += `\n**Remaining play time:** ${niceTime(overallTime)}`;
     }
 
     client.reply(m, formattedList);
@@ -443,6 +443,22 @@ client.on('message', m => {
     return;
   }
 });
+
+function niceTime(timeValue)
+{
+	var hoursOf = Math.floor(timeValue / 60 / 60);
+	var minutesOf = Math.floor((timeValue - (hoursOf * 60 * 60)) / 60);
+	var stringTime;
+	if (hoursOf != 0)
+	{
+		stringTime = hoursOf + " hours and " + minutesOf + " minute(s)..."
+	}
+	else
+	{
+		stringTime = minutesOf + " minute(s)..."
+	}
+	return stringTime;
+}
 
 function parseVidAndQueue(vid, m, suppress) {
   vid = resolveVid(vid, m);
