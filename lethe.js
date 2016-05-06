@@ -502,7 +502,9 @@ function play(video) {
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${video.prettyPrint()}`);
       client.setStatus('online', video.title);
-      intent.on('end', this.playStopped);
+      intent.on('end', ()=>{
+        playStopped();
+      });
     });
   }
 }
