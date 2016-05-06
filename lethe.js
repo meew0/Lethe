@@ -19,7 +19,7 @@ var YoutubeTrack = require('./lib/youtube-track.js');
 
 var Util = require('./lib/util.js');
 var Config = require('./lib/config.js');
-var CURRENT_REV = 4;
+var CURRENT_REV = 5;
 
 var client = new Discord.Client();
 
@@ -52,7 +52,12 @@ if (process.argv[4]) {
 }
 
 client.on('ready', () => {
-  botMention = `<@${client.user.id}>`;
+  if (Config.botHasNickname) {
+    botMention = `<@!${client.user.id}>`;
+  } else {
+    botMention = `<@${client.user.id}>`;
+  }
+
   console.log(`Bot mention: ${botMention}`);
   if (Config.configRev !== CURRENT_REV) {
     console.log('WARNING: Your lethe-config.json is out of date relative to the code using it! Please update it from the git repository, otherwise things will break!');

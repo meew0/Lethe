@@ -1,10 +1,11 @@
 {
-  "configRev": 4,
+  "configRev": 5,
   "timeOffset": 8000,
   "maxLength": -1,
   "userQueueLimit": -1,
   "playbackNetworkMessage": true,
   "shouldUsePMs": false,
+  "botHasNickname": false,
   "checksEnabled": {
     "checkDuplicateVideo": false,
     "checkDuplicateUser": false,
