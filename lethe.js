@@ -498,10 +498,11 @@ function play(video) {
       playStopped(); // skip to next video
     });
 
-    currentStream.on('end', () => setTimeout(playStopped, Config.timeOffset || 8000)); // 8 second leeway for bad timing
+    //currentStream.on('end', () => setTimeout(playStopped, Config.timeOffset || 8000)); // 8 second leeway for bad timing, this caused bad timing
     connection.playRawStream(currentStream).then(intent => {
       boundChannel.sendMessage(`Playing ${video.prettyPrint()}`);
       client.setStatus('online', video.title);
+      intent.on('end', this.playStopped);
     });
   }
 }
