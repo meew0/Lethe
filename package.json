@@ -22,7 +22,7 @@
   "dependencies": {
     "discord.js": "7.0.0",
     "superagent": "^1.6.1",
-    "ytdl-core": "^0.7.9",
+    "ytdl-core": "0.7.10",
     "node-opus": "^0.1.11",
     "git-rev": "^0.2.1"
   },
